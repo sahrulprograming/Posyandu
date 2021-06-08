@@ -1,0 +1,37 @@
+
+@import url('https://fonts.googleapis.com/css?family=Barlow:300,400,500,600&display=swap');
+
+$primary:   #188ae2;
+$success:   #31ce77;
+$info:      #35b8e0;
+$danger:    #f34943;
+$purple:    #6b5eae;
+$pink:      #ff679b;
+$white:     #ffffff;
+$dark:      #323a46;
+$light:     #f1f5f7;
+$muted:     #98a6ad;
+
+// stylelint-disable
+$gray-100: #f1f5f7;
+$gray-200: #f7f7f7;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #98a6ad;
+$gray-700: #6c757d;
+$gray-800: #414d5f;
+$gray-900: #323a46;
+
+
+$font-size-base : .9rem;
+
+$bg-gradient : linear-gradient(15deg,#02a8b5 0,#31ce77 100%);
+
+$box-shadow:   0 0 1.25rem rgba(108,118,134,.1);
+
+
+$font-family-primary: 'Barlow', sans-serif;
+
+// Secondary font
+$font-family-secondary: 'Barlow', sans-serif;
