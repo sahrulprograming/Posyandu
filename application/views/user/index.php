@@ -23,9 +23,9 @@
     <header id="topnav">
 
 
-        <?php $this->load->view('user/akun/topbar') ?>
+        <?php $this->load->view('user/topbar') ?>
 
-        <?php $this->load->view('user/akun/sidebar') ?>
+        <?php $this->load->view('user/sidebar') ?>
         <!-- end navbar-custom -->
 
     </header>
@@ -92,7 +92,7 @@
     <!-- End Page content -->
     <!-- ============================================================== -->
 
-    <?php $this->load->view('user/akun/footer') ?>
+    <?php $this->load->view('template/footer') ?>
 
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>

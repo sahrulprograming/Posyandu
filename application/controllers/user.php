@@ -7,7 +7,13 @@ class User extends CI_Controller
 
     public function index()
     {
+        $data['title'] = 'Home | Posyandu';
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('template/sidebar', $data);
         $this->load->view('user/index');
+        $this->load->view('template/rightbar', $data);
+        $this->load->view('template/footer');
     }
 
     public function home($value = '')

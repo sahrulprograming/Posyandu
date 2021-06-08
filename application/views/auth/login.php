@@ -2,7 +2,6 @@
 if ($this->session->userdata('notif')) {
     $notif = $this->session->userdata('notifikasi');
     echo "<script>
-
         alert('$notif')
     </script>";
 }
