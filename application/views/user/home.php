@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Greeva - Bootstrap 4 Landing Page Tamplate</title>
+    <title>Posyandu Mawar 20</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="Coderthemes" />
@@ -179,7 +179,8 @@
                 <?php foreach ($kegiatan as $kegiatan) : ?>
                     <div class="col-lg-4 col-md-6">
                         <div class="demo-box text-center card p-2">
-                            <a href="#" class="text-dark">
+                            <!-- Button trigger modal -->
+                            <a href="" class="text-dark" data-toggle="modal" data-target="#keterangan<?= $kegiatan['kd_kegiatan']; ?>">
                                 <div class="position-relative demo-content">
                                     <div class="demo-img">
                                         <img src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
@@ -191,10 +192,35 @@
                                     </div>
                                     <div class="card-body p-1">
                                         <h4><?= $kegiatan['judul']; ?></h4>
-                                        <a href="#" class="text-primary">Selengkapnya <i class="mdi mdi-arrow-right ml-1"></i></a>
                                     </div>
                                 </div>
                             </a>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="keterangan<?= $kegiatan['kd_kegiatan']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle"><?= $kegiatan['judul']; ?></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="demo-img img-thumbnail">
+                                        <img src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
+                                    </div>
+                                    <h1 class="text-center"><?= $kegiatan['judul']; ?></h1>
+                                    <div class="container mt-3">
+                                        <?= $kegiatan['keterangan']; ?>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>

@@ -89,7 +89,7 @@
 
                         <!-- Modal -->
                         <div class="modal fade" id="keterangan<?= $kegiatan['kd_kegiatan']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLongTitle"><?= $kegiatan['judul']; ?></h5>
@@ -98,7 +98,15 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <?= $kegiatan['keterangan']; ?>
+                                        <div class="demo-img img-thumbnail">
+                                            <img src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
+                                        </div>
+                                        <h1 class="text-center"><?= $kegiatan['judul']; ?></h1>
+                                        <div class="container mt-3 text-center">
+                                            <p>
+                                                <?= $kegiatan['keterangan']; ?>
+                                            </p>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

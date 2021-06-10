@@ -1,215 +1,298 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Begin page -->
+<div id="wrapper">
 
-<head>
-    <meta charset="utf-8" />
-    <title>Greeva - Responsive Bootstrap 4 Admin Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="<?php echo base_url() . 'assets' ?>/images/favicon.ico">
+    <div class="content-page">
+        <div class="content">
 
-    <!-- App css -->
-    <link href="<?php echo base_url() . 'assets' ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="<?php echo base_url() . 'assets' ?>/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="<?php echo base_url() . 'assets' ?>/css/app.min.css" rel="stylesheet" type="text/css" />
+            <!-- Start Content-->
+            <div class="container-fluid">
 
-</head>
-
-<body>
-
-    <!-- Begin page -->
-    <div id="wrapper">
-
-        <?php $this->load->view('admin/topbar') ?>
-
-        <?php $this->load->view('admin/sidebar') ?>
-
-
-        <div class="content-page">
-            <div class="content">
-
-                <!-- Start Content-->
-                <div class="container-fluid">
-
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box">
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Greeva</a></li>
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                                        <li class="breadcrumb-item active">Starter</li>
-                                    </ol>
-                                </div>
-                                <h4 class="page-title">Balita</h4>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card-box">
-
-
-                                            <table id="datatable" class="table table-bordered dt-responsive nowrap">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nama Anak</th>
-                                                        <th>Jenis Kelamin</th>
-                                                        <th>Tanggal Lahir</th>
-                                                        <th>Berat Badan</th>
-                                                        <th>Tinngi Badan</th>
-                                                        <th>Nama Orang Tua</th>
-                                                        <th>NIK</th>
-                                                        <th>Nomor Kartu Keluarga</th>
-                                                        <th>Aksi</th>
-
-                                                    </tr>
-                                                </thead>
-
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Greeva</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                                    <li class="breadcrumb-item active">Starter</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Data Balita</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box">
+                                    <div>
+                                        <button type="button" class="btn btn-success waves-effect waves-light width-xm mb-3" data-toggle="modal" data-target="#tambah">Tambah balita</button>
+                                    </div>
+                                    <?= $this->session->flashdata('message'); ?>
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th width="20%">Nama Balita</th>
+                                                <th width="10%">jenis kelamin</th>
+                                                <th width="10%">tanggal Lahir</th>
+                                                <th width="15%">Nama Orang tua</th>
+                                                <th width="15%">Bidan Perawat</th>
+                                                <th width="30%">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($balita as $balita) : ?>
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td> <a href=""><button type="button" class="btn btn-danger waves-effect waves-light width-md">Hapus</button></a>
-
-                                                        <a href=""><button type="button" class="btn btn-success waves-effect waves-light width-md">Grafik</button> </a>
+                                                    <td><?= $balita['nama_balita']; ?></td>
+                                                    <td><?= $balita['jenis_kelamin']; ?></td>
+                                                    <td><?= $balita['tgl_lahir']; ?></td>
+                                                    <td><?= $balita['nama_orang_tua']; ?></td>
+                                                    <td><?= $balita['nama_bidan']; ?></td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-success waves-effect waves-light width-xm" data-toggle="modal" data-target="#detail<?= $balita['kd_balita']; ?>">Detail</button>
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light width-xm" data-toggle="modal" data-target="#ubah_balita<?= $balita['kd_balita']; ?>">ubah</button>
+                                                        <button type="button" class="btn btn-danger waves-effect waves-light width-xm" data-toggle="modal" data-target="#hapus<?= $balita['kd_balita']; ?>">hapus</button>
                                                     </td>
-
-
                                                 </tr>
 
 
-                                                <tbody>
 
-                                                </tbody>
-                                            </table>
-                                        </div> <!-- end card-box -->
-                                    </div> <!-- end col -->
-                                </div> <!-- end row -->
+                                                <!-- Awal  Detail Modal Dialog -->
+                                                <div class=" modal fade" id="detail<?= $balita['kd_balita']; ?>" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <h4 class="modal-title">Detail Data Balita</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body p-3">
+                                                                <?= form_open_multipart("admin/ubah_balita"); ?>
+                                                                <input class="form-control form-white" type="hidden" name="kd_balita" value="<?= $balita['kd_balita']; ?>" readonly>
+                                                                <!-- NIK -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Nik</label>
+                                                                    <input class="form-control form-white" placeholder="masukan nik" type="number" name="nik" value="<?= $balita['nik']; ?>" readonly>
+                                                                </div>
+                                                                <!-- NAMA -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Nama</label>
+                                                                    <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" value="<?= $balita['nama_balita']; ?>" readonly>
+                                                                </div>
+                                                                <!-- Jenis Kelamin -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Jenis kelamin</label>
+                                                                    <input class="form-control form-white" placeholder="Jenis Kelamin" type="text" name="jenis_kelamin" value="<?= $balita['jenis_kelamin']; ?>" readonly>
+                                                                </div>
+                                                                <!-- tanggal Lahir -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Tanggal Lahir</label>
+                                                                    <input class="form-control form-white" placeholder="masukan tlp" type="text" name="tgl_lahir" value="<?= $balita['tgl_lahir']; ?>" readonly>
+                                                                </div>
+                                                                <!-- Berat Badan -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Berat Badan</label>
+                                                                    <input class="form-control form-white" placeholder="bb" type="text" name="bb" value="<?= $balita['bb']; ?> Kg" readonly>
+                                                                </div>
+                                                                <!-- Tinggi Badan -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Tinggi Badan</label>
+                                                                    <input class="form-control form-white" placeholder="tb" type="text" name="tb" value="<?= $balita['tb']; ?> Cm" readonly>
+                                                                </div>
+                                                                <!-- Keluhan -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Keluhan</label>
+                                                                    <textarea class="form-control form-white" placeholder="Keluhan" type="text" name="keluhan" readonly><?= $balita['keluhan']; ?></textarea>
+                                                                </div>
+                                                                <!-- Nama Ortu -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Nama orang tua</label>
+                                                                    <input class="form-control form-white" placeholder="nama_orang_tua" type="text" name="nama_orang_tua" value="<?= $balita['nama_orang_tua']; ?>" readonly>
+                                                                </div>
+                                                                <!-- Nama Bidan -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Nama Bidan Perawat</label>
+                                                                    <input class="form-control form-white" placeholder="nama_bidan" type="text" name="nama_bidan" value="<?= $balita['nama_bidan']; ?>" readonly>
+                                                                </div>
 
+                                                                <div class="text-right">
+                                                                    <!-- Tombol Close -->
+                                                                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+                                                                </div>
+
+                                                                </form>
+                                                            </div>
+                                                            <!-- Akhir modal body-->
+                                                        </div>
+                                                        <!-- Akhir modal content -->
+                                                    </div>
+                                                </div>
+                                                <!-- Akhir Detail modal dialog-->
+
+
+                                                <!-- Awal ubah_balita  Modal Dialog -->
+                                                <div class=" modal fade" id="ubah_balita<?= $balita['kd_balita']; ?>" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <h4 class="modal-title">Ubah Data balita</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body p-3">
+                                                                <?= form_open_multipart("ubah/balita"); ?>
+                                                                <input class="form-control form-white" type="hidden" name="kd_balita" value="<?= $balita['kd_balita']; ?>">
+                                                                <!-- NIK -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Nik</label>
+                                                                    <input class="form-control form-white" placeholder="masukan nik" type="text" name="nik" value="<?= $balita['nik']; ?>">
+                                                                </div>
+                                                                <!-- NAMA -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Nama</label>
+                                                                    <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" value="<?= $balita['nama_balita']; ?>">
+                                                                </div>
+                                                                <!-- No Telp -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Alamat</label>
+                                                                    <textarea class="form-control form-white" placeholder="Alamat" type="text" name="alamat"><?= $balita['nama_bidan']; ?></textarea>
+                                                                </div>
+                                                                <!-- No Telp -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">No Telp</label>
+                                                                    <input class="form-control form-white" placeholder="masukan tlp" type="text" name="no_tlpn" value="<?= $balita['bb']; ?>">
+                                                                </div>
+                                                                <!-- Email -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Email</label>
+                                                                    <input class="form-control form-white" placeholder="email" type="text" name="email" value="<?= $balita['tb']; ?>">
+                                                                </div>
+                                                                <div class="text-right">
+                                                                    <!-- Tombol Batal -->
+                                                                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Batal</button>
+                                                                    <!-- Tombol Ubah -->
+                                                                    <button type="submit" class="btn btn-primary ml-1 waves-effect waves-light save-category">Ubah</button>
+                                                                </div>
+
+                                                                </form>
+                                                            </div>
+                                                            <!-- Akhir modal body-->
+                                                        </div>
+                                                        <!-- Akhir modal content -->
+                                                    </div>
+                                                </div>
+                                                <!-- Akhir ubah_balita  modal dialog-->
+
+
+                                                <!-- Awal Hapus Modal Dialog -->
+                                                <div class="modal fade" id="hapus<?= $balita['kd_balita']; ?>" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <h4 class="modal-title">Hapus data balita</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body p-3">
+                                                                <h5>Yakin ingin menghapus?</h5>
+                                                                <?= form_open_multipart("hapus/balita"); ?>
+                                                                <div class="mb-3">
+                                                                    <input type="hidden" class="form-control" id="kd_balita" name="kd_balita" value="<?= $balita['kd_balita'] ?> " readoly>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="nama" class="col-form-label">balita :</label>
+                                                                    <input type="text" class="form-control" id="nama" name="nama" value="<?= $balita['nama_balita'] ?>" readoly>
+                                                                </div>
+                                                                <div class="text-right">
+                                                                    <!-- Tombol Batal -->
+                                                                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Batal</button>
+                                                                    <!-- Tombol Ubah -->
+                                                                    <button type="submit" class="btn btn-danger ml-1 waves-effect waves-light save-category">Hapus</button>
+                                                                </div>
+                                                                </form>
+                                                            </div>
+                                                            <!-- Akhir modal body-->
+                                                        </div>
+                                                        <!-- Akhir modal content -->
+                                                    </div>
+                                                </div>
+                                                <!-- Akhir Hapus Modal Dialog -->
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- Awal Tambah  Modal Dialog -->
+                                    <div class=" modal fade" id="tambah" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-bottom-0">
+                                                    <h4 class="modal-title">Ubah Data balita</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body p-3">
+                                                    <?= form_open_multipart("insert/balita"); ?>
+                                                    <!-- NIK -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Nik</label>
+                                                        <input class="form-control form-white" placeholder="masukan nik" type="number" name="nik" required>
+                                                    </div>
+                                                    <!-- NAMA -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Nama</label>
+                                                        <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" required>
+                                                    </div>
+                                                    <!-- No Telp -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Alamat</label>
+                                                        <textarea class="form-control form-white" placeholder="Alamat" type="text" name="alamat" required></textarea>
+                                                    </div>
+                                                    <!-- No Telp -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">No Telp</label>
+                                                        <input class="form-control form-white" placeholder="masukan tlp" type="number" name="no_tlpn" required>
+                                                    </div>
+                                                    <!-- Email -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Email</label>
+                                                        <input class="form-control form-white" placeholder="email" type="text" name="email" required>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <!-- Tombol Batal -->
+                                                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Batal</button>
+                                                        <!-- Tombol Ubah -->
+                                                        <button type="submit" class="btn btn-success ml-1 waves-effect waves-light save-category">Tambah</button>
+                                                    </div>
+
+                                                    </form>
+                                                </div>
+                                                <!-- Akhir modal body-->
+                                            </div>
+                                            <!-- Akhir modal content -->
+                                        </div>
+                                    </div>
+                                    <!-- Akhir Tambah  modal dialog-->
+                                </div>
+                                <!-- end card-box -->
                             </div>
+                            <!-- end col -->
                         </div>
                     </div>
-                    <!-- end page title -->
+                </div>
+                <!-- end row -->
+                <!-- end page title -->
 
-                </div> <!-- container-fluid -->
+            </div> <!-- container-fluid -->
 
-            </div> <!-- content -->
-
-            <?php $this->load->view('admin/footer') ?>
-
-        </div>
-
-        <!-- ============================================================== -->
-        <!-- End Page content -->
-        <!-- ============================================================== -->
+        </div> <!-- content -->
 
 
     </div>
-    <!-- END wrapper -->
 
-    <?php $this->load->view('admin/right') ?>
-    <!-- Right bar overlay-->
-    <div class="rightbar-overlay"></div>
-
-    <!-- Vendor js -->
-    <script src="<?php echo base_url() . 'assets' ?>/js/vendor.min.js"></script>
-
-    <!-- datatable js -->
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/jquery.dataTables.min.js"></script>
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/dataTables.responsive.min.js"></script>
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/responsive.bootstrap4.min.js"></script>
-
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/dataTables.buttons.min.js"></script>
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/buttons.bootstrap4.min.js"></script>
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/buttons.html5.min.js"></script>
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/buttons.flash.min.js"></script>
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/buttons.print.min.js"></script>
-
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/dataTables.keyTable.min.js"></script>
-    <script src="<?php echo base_url() . 'assets' ?>/libs/datatables/dataTables.select.min.js"></script>
-
-    <!-- Datatables init -->
-    <script src="<?php echo base_url() . 'assets' ?>/js/pages/datatables.init.js"></script>
-
-    <!-- App js -->
-    <script src="<?php echo base_url() . 'assets' ?>/js/app.min.js"></script>
-
-</body>
-
-</html>
-</div>
-</div>
-</div>
-<!-- end page title -->
-
-</div> <!-- container-fluid -->
-
-</div> <!-- content -->
-
-<?php $this->load->view('admin/footer') ?>
-
-</div>
-
-<!-- ============================================================== -->
-<!-- End Page content -->
-<!-- ============================================================== -->
-
-
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
 </div>
 <!-- END wrapper -->
-
-<?php $this->load->view('admin/right') ?>
-<!-- Right bar overlay-->
-<div class="rightbar-overlay"></div>
-
-<!-- Vendor js -->
-<script src="<?php echo base_url() . 'assets' ?>/js/vendor.min.js"></script>
-
-<!-- App js -->
-<script src="<?php echo base_url() . 'assets' ?>/js/app.min.js"></script>
-
-</body>
-
-</html>
-</div>
-</div>
-</div>
-<!-- end page title -->
-
-</div> <!-- container-fluid -->
-
-</div> <!-- content -->
-
-<?php $this->load->view('admin/footer') ?>
-
-</div>
-
-<!-- ============================================================== -->
-<!-- End Page content -->
-<!-- ============================================================== -->
-
-
-</div>
-<!-- END wrapper -->
-
-<?php $this->load->view('admin/right') ?>
-<!-- Right bar overlay-->
-<div class="rightbar-overlay"></div>
-
-<!-- Vendor js -->
-<script src="<?php echo base_url() . 'assets' ?>/js/vendor.min.js"></script>
-
-<!-- App js -->
-<script src="<?php echo base_url() . 'assets' ?>/js/app.min.js"></script>
-
-</body>
-
-</html>

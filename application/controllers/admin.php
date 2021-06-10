@@ -12,6 +12,7 @@ class Admin extends CI_Controller
 		$this->data_admin = $this->admin_model->data_admin();
 		$this->jadwal = $this->akun_model->data_jadwal();
 		$this->kegiatan = $this->akun_model->data_kegiatan();
+		$this->data_ortu = $this->admin_model->data_ortu();
 	}
 
 	public function index()
@@ -26,10 +27,41 @@ class Admin extends CI_Controller
 		$this->load->view('template/rightbar', $data);
 		$this->load->view('template/footer');
 	}
+	public function orang_tua()
+	{
+		$data['title'] = 'Data Orang Tua | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['orang_tua'] = $this->data_ortu;
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/orang_tua', $data);
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
+	}
 	public function bidan($value = '')
 	{
-		$bidan = $this->model->bidan();
-		$this->load->view('admin/bidan', array('bidan' => $bidan));
+		$data['title'] = 'Data Bidan | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['bidan'] = $this->admin_model->data_bidan();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/bidan', $data);
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
+	}
+	public function balita($value = '')
+	{
+		$data['title'] = 'Data Balita | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['balita'] = $this->admin_model->data_balita();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/balita');
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
 	}
 	public function anggota($value = '')
 	{
@@ -47,10 +79,7 @@ class Admin extends CI_Controller
 	{
 		$this->load->view('admin/laporan_posyandu');
 	}
-	public function balita($value = '')
-	{
-		$this->load->view('admin/balita');
-	}
+
 	public function pmt($value = '')
 	{
 		$this->load->view('admin/pmt');
@@ -65,12 +94,6 @@ class Admin extends CI_Controller
 
 	{
 		$this->load->view('admin/imunisasi');
-	}
-	public function orang_tua($value = '')
-	{
-		$orang_tua = $this->model->orang_tua();
-
-		$this->load->view('admin/orang_tua', array('orang_tua' => $orang_tua));
 	}
 
 	public function detailPMT($value = '')
@@ -117,7 +140,7 @@ class Admin extends CI_Controller
 					$nama_gambar = $this->upload->data('file_name');
 					$this->admin_model->posting_kegiatan($_POST, $nama_gambar);
 
-					$this->session->set_flashdata('message', '<div class="alert alert-succes" role="alert">Berhasil posting kegiatan!</div>');
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil posting kegiatan!</div>');
 					redirect('admin/kegiatan');
 				} else {
 					echo $this->upload->display_errors();

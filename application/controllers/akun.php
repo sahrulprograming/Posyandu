@@ -121,7 +121,7 @@ class Akun extends CI_Controller
         }
         public function kegiatanposyandu()
         {
-                $data['title'] = 'Home | Posyandu';
+                $data['title'] = 'Kegiatan | Posyandu';
                 $data['kegiatan'] = $this->kegiatan;
                 $data['profile'] = $this->orang_tua;
                 $this->load->view('template/header', $data);
