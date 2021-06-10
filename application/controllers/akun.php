@@ -8,27 +8,30 @@ class Akun extends CI_Controller
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->load->model('Akun_model', 'akun_model');
-                $this->array = $this->akun_model->data_user();
-                $this->balita = $this->array[0];
-                $this->orang_tua = $this->array[1];
-                $this->jadwal = $this->array[2];
+                $this->data_user = $this->akun_model->data_user();
+                $this->balita = $this->data_user[0];
+                $this->orang_tua = $this->data_user[1];
+                $this->jumlah_balita = $this->akun_model->jumlah_balita();
+                $this->jadwal = $this->akun_model->data_jadwal();
                 $this->pmt = $this->akun_model->data_pmt();
+                $this->kegiatan = $this->akun_model->data_kegiatan();
         }
 
         public function index()
         {
-                $data['orang_tua'] = $this->orang_tua;
+                $data['profile'] = $this->orang_tua;
+                $data['kegiatan'] = $this->kegiatan;
                 $data['title'] = 'Home | Posyandu';
                 $this->load->view('template/header', $data);
                 $this->load->view('template/topbar', $data);
                 $this->load->view('template/sidebar', $data);
-                $this->load->view('user/akun/home');
+                $this->load->view('user/akun/home', $data);
                 $this->load->view('template/rightbar', $data);
                 $this->load->view('template/footer');
         }
         public function orang_tua()
         {
-                $data['orang_tua'] = $this->orang_tua;
+                $data['profile'] = $this->orang_tua;
                 $this->load->view('user/akun/orang_tua', $data);
         }
         public function edit_ortu()
@@ -43,7 +46,7 @@ class Akun extends CI_Controller
                         'numeric' => 'Wajib berisi isi angka'
                 ]);
                 if ($this->form_validation->run() == false) {
-                        $data['orang_tua'] = $this->orang_tua;
+                        $data['profile'] = $this->orang_tua;
                         $this->load->view('user/akun/orang_tua', $data);
                 } else {
                         $nik = $this->input->post('nik');
@@ -63,12 +66,13 @@ class Akun extends CI_Controller
         public function balita()
         {
                 $data['balita'] = $this->balita;
-                $data['orang_tua'] = $this->orang_tua;
+                $data['profile'] = $this->orang_tua;
                 $data['title'] = 'Balita | Posyandu';
                 $this->load->view('template/header', $data);
                 $this->load->view('template/topbar', $data);
                 $this->load->view('template/sidebar', $data);
                 $this->load->view('user/akun/balita', $data);
+                $this->load->view('template/rightbar', $data);
                 $this->load->view('template/footer');
         }
 
@@ -76,7 +80,8 @@ class Akun extends CI_Controller
         {
                 $data['jadwal'] = $this->jadwal;
                 $data['title'] = 'Jadwal | Posyandu';
-                $data['orang_tua'] = $this->orang_tua;
+                $data['profile'] = $this->orang_tua;
+                $data['jumlah_balita'] = $this->jumlah_balita;
                 $this->load->view('template/header', $data);
                 $this->load->view('template/topbar', $data);
                 $this->load->view('template/sidebar', $data);
@@ -86,10 +91,9 @@ class Akun extends CI_Controller
         }
         public function pmt()
         {
-                $data['balita'] = $this->balita;
                 $data['pmt'] = $this->pmt;
+                $data['profile'] = $this->orang_tua;
                 $data['title'] = 'PMT | Posyandu';
-                $data['orang_tua'] = $this->orang_tua;
                 $this->load->view('template/header', $data);
                 $this->load->view('template/topbar', $data);
                 $this->load->view('template/sidebar', $data);
@@ -107,12 +111,24 @@ class Akun extends CI_Controller
                 ]);
                 if ($this->form_validation->run() == false) {
                         $data['balita'] = $this->balita;
-                        $data['orang_tua'] = $this->orang_tua;
+                        $data['profile'] = $this->orang_tua;
                         $this->load->view('user/akun/balita', $data);
                 } else {
                         $this->akun_model->update_balita();
                         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dirubah! </div>');
                         redirect('akun/balita');
                 }
+        }
+        public function kegiatanposyandu()
+        {
+                $data['title'] = 'Home | Posyandu';
+                $data['kegiatan'] = $this->kegiatan;
+                $data['profile'] = $this->orang_tua;
+                $this->load->view('template/header', $data);
+                $this->load->view('template/topbar', $data);
+                $this->load->view('template/sidebar', $data);
+                $this->load->view('user/akun/kegiatan');
+                $this->load->view('template/rightbar', $data);
+                $this->load->view('template/footer');
         }
 }

@@ -35,7 +35,6 @@ class Auth extends CI_Controller
         $orang_tua = $data[0];
         $admin = $data[1];
         $bidan = $data[2];
-        $balita = $data[3];
 
         // Jika ada maka menjalankan Fungsi if ini
         if ($orang_tua or $admin or $bidan) {
@@ -44,7 +43,8 @@ class Auth extends CI_Controller
                 $nik = $orang_tua['nik'];
                 $data = [
                     'kd_ortu' => $orang_tua['kd_ortu'],
-                    'role'  => 'User'
+                    'role'  => 'User',
+                    'id_menu' => 2
                 ];
                 $this->session->set_userdata($data);
                 if ($nik == 0) {
@@ -62,7 +62,8 @@ class Auth extends CI_Controller
             } elseif (password_verify($password, $bidan['password'])) {
                 $data = [
                     'kd_bidan' => $bidan['kd_bidan'],
-                    'role'  => 'Bidan'
+                    'role'  => 'Bidan',
+                    'id_menu' => 3
                 ];
                 $this->session->set_userdata($data);
                 redirect('bidan');

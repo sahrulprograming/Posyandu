@@ -12,12 +12,13 @@
 
                 <li>
                     <?php $menu = $this->db->get_where('sub_menu', ['id_menu' => 1])->result_array(); ?>
-                    <?php foreach ($menu as $m) : ?>
-                        <?php $url = $m['url'] ?>
+
+                    <?php foreach ($menu as $menu) : ?>
+                        <?php $url = $menu['url'] ?>
                 <li>
                     <a href="<?= base_url($url); ?>">
-                        <i class="<?= $m['icon'] ?>"></i>
-                        <span> <?= $m['judul']; ?> </span>
+                        <i class="<?= $menu['icon'] ?>"></i>
+                        <span> <?= $menu['judul']; ?> </span>
                     </a>
                 </li>
             <?php endforeach; ?>
@@ -29,16 +30,22 @@
                     <span class="menu-arrow"></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
-
+                    <li>
+                        <a href="<?= base_url('admin/kegiatan'); ?>">kegiatan Posyandu</a>
+                    </li>
                     <li>
                         <a href="<?= base_url('admin/jadwal'); ?>">Jadwal Posyandu</a>
                     </li>
-
                     <li>
                         <a href="<?= base_url('admin/laporan_posyandu'); ?>">laporan Posyandu</a>
                     </li>
                 </ul>
-
+            </li>
+            <li class="has-submenu">
+                <a href="<?= base_url('Auth/logout'); ?>">
+                    <i class="fas fa-sign-out-alt"></i>
+                    logout
+                </a>
             </li>
 
         </div>

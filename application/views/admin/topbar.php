@@ -184,9 +184,6 @@
         <li class="float-left">
             <a class="button-menu-mobile navbar-toggle">
                 <div class="lines">
-                    <span>apa nih</span>
-                    <span>coba</span>
-                    <span></span>
                 </div>
             </a>
         </li>

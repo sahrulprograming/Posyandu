@@ -15,7 +15,7 @@
                 <div class="row justify-content-center ">
                     <div class="col-lg-5">
                         <div class="title text-center mb-3">
-                            <h3>Foto Kegiatan Posyandu Mawar 20</h3>
+                            <h3>Kegiatan Posyandu Mawar 20</h3>
                         </div>
                     </div>
                 </div>
@@ -39,9 +39,30 @@
                                             </div>
                                             <h4><?= $kegiatan['judul']; ?></h4>
                                             <!-- Button trigger modal -->
+                                            <a href="#" class="text-primary" data-toggle="modal" data-target="#keterangan<?= $kegiatan['kd_kegiatan']; ?>">Selengkapnya <i class="mdi mdi-arrow-right ml-1"></i></a>
                                         </div>
                                     </div>
                                 </a>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="keterangan<?= $kegiatan['kd_kegiatan']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle"><?= $kegiatan['judul']; ?></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <?= $kegiatan['keterangan']; ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>

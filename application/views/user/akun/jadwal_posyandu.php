@@ -47,7 +47,7 @@
 
                                         <div class="col-md-4">
                                             <div class="text-center">
-                                                <h4>Rp.<?= number_format($jadwal['kas_pmt'], 0, ",", "."); ?></h4>
+                                                <h4>Rp.<?= number_format($jadwal['kas_pmt'] * $jumlah_balita, 0, ",", "."); ?></h4>
                                                 <p class="mb-1">Uang Kas PMT</p>
                                                 <div>
                                                     <a href="#" class="btn btn-success btn-rounded">Bayar</a>

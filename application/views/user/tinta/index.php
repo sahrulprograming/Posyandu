@@ -91,19 +91,3 @@
     <!-- ============================================================== -->
     <!-- End Page content -->
     <!-- ============================================================== -->
-
-    <?php $this->load->view('template/footer') ?>
-
-    <!-- Right bar overlay-->
-    <div class="rightbar-overlay"></div>
-
-
-    <!-- Vendor js -->
-    <script src="<?php echo base_url() . 'assets2' ?>/js/vendor.min.js"></script>
-
-    <!-- App js -->
-    <script src="<?php echo base_url() . 'assets2' ?>/js/app.min.js"></script>
-
-</body>
-
-</html>

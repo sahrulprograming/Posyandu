@@ -1,34 +1,34 @@
 <!-- Begin page -->
 <div id="wrapper">
     <div class="content-page">
-        <?php foreach ($pmt as $pmt) : ?>
-            <table id="datatable" class="table table-bordered dt-responsive nowrap">
-                <thead>
+        <table id="datatable" class="table table-bordered dt-responsive nowrap">
+            <thead>
+                <tr>
+                    <th width="20%">Nama balita</th>
+                    <th width="15%">Nominal</th>
+                    <th width="15%">Jatuh Tempo</th>
+                    <th width="15%">Tanggal Bayar</th>
+                    <th width="15%">Aksi</th>
+                    <th width="20%">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pmt as $pmt) : ?>
                     <tr>
-                        <th width="20%">Nama balita</th>
-                        <th width="15%">Nominal</th>
-                        <th width="15%">Jatuh Tempo</th>
-                        <th width="15%">Tanggal Bayar</th>
-                        <th width="15%">Aksi</th>
-                        <th width="20%">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1234567898765432</td>
-                        <td>123</td>
-                        <td>123</td>
-                        <td>112</td>
+                        <td><?= $pmt['nama']; ?></td>
+                        <td><?= $pmt['kas_pmt']; ?></td>
+                        <td><?= $pmt['tanggal']; ?></td>
+                        <td><?= $pmt['tanggal_pembayaran']; ?></td>
                         <td class="aksi">
-                            <a href="#" class="badge btn-success" data-toggle="modal" data-target="#exampleModalCenter<?= $orang_tua['kd_id']; ?>">Detail</a>
+                            <a href="#" class="btn-info btn-sm" data-toggle="modal" data-target="#exampleModalCenter<?= $pmt['kd_pmt']; ?>">Detail</a>
                         </td>
                         <td class="aksi">
-                            <a href="#" class="badge btn-success">LUNAS</a>
+                            <a href="#" class="btn-success btn-sm text-white"><?= $pmt['status_pembayaran']; ?></a>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        <?php endforeach; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </div>
 <!-- ============================================================== -->

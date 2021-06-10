@@ -11,7 +11,7 @@
                 <li class="menu-title">user</li>
 
                 <li>
-                    <?php $menu = $this->db->get_where('sub_menu', ['id_menu' => 2])->result_array(); ?>
+                    <?php $menu = $this->db->get_where('sub_menu', ['id_menu' => $this->session->userdata('id_menu')])->result_array(); ?>
                     <?php foreach ($menu as $m) : ?>
                         <?php $url = $m['url'] ?>
                 <li>
@@ -30,7 +30,7 @@
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="<?= base_url('user/Kegiatanposyandu'); ?>">Kegiatan Posyandu</a>
+                        <a href="<?= base_url('akun/Kegiatanposyandu'); ?>">Kegiatan Posyandu</a>
                     </li>
                     <li>
                         <a href="<?= base_url('user/Kaderposyandu'); ?>">Kader-Kader Posyandu</a>
