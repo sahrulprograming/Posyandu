@@ -17,7 +17,7 @@ class Insert extends CI_Controller
 			'alamat' => $_POST['alamat'],
 			'email' => $_POST['email'],
 			'no_tlpn' => $_POST['no_tlpn'],
-			'password' => password_hash($_POST['no_tlpn'], PASSWORD_DEFAULT)
+			'password' => password_hash('mawar20', PASSWORD_DEFAULT)
 		];
 		$this->db->insert('bidan', $data);
 		$result = $this->db->affected_rows();
@@ -36,9 +36,9 @@ class Insert extends CI_Controller
 			'nama' => $_POST['nama'],
 			'alamat' => $_POST['alamat'],
 			'no_tlpn' => $_POST['no_tlpn'],
-			'status' => 'prosess',
+			'status' => 'aktif',
 			'email' => $_POST['email'],
-			'password' => password_hash($_POST['no_tlpn'], PASSWORD_DEFAULT)
+			'password' => password_hash('mawar20', PASSWORD_DEFAULT)
 		];
 		$this->db->insert('orang_tua', $data);
 		$result = $this->db->affected_rows();
@@ -48,6 +48,215 @@ class Insert extends CI_Controller
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal menambah Data Orang Tua!</div>');
 		}
 		redirect('admin/orang_tua');
+	}
+	public function balita()
+	{
+		// $arr = explode('-', $_POST['tgl_lahir']);
+		// $tgl_lahir = $arr[2] . '-' . $arr[1] . '-' . $arr[0];
+		$result = $this->db->get_where('bidan', ['nama' => $_POST['nama_bidan']])->row_array();
+		$kd_bidan = $result['kd_bidan'];
+		$data = [
+			'nik' => $_POST['nik'],
+			'nama' => $_POST['nama'],
+			'jenis_kelamin' => $_POST['jenis_kelamin'],
+			'nik' => $_POST['nik'],
+			'tgl_lahir' => $_POST['tgl_lahir'],
+			'kd_bidan' => $kd_bidan
+		];
+		$this->db->insert('balita', $data);
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambah Data Balita!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal menambah Data Balita!</div>');
+		}
+		redirect('admin/balita');
+	}
+	public function jadwal()
+	{
+		// $arr = explode('-', $_POST['tgl_lahir']);
+		// $tgl_lahir = $arr[2] . '-' . $arr[1] . '-' . $arr[0];
+		$data = [
+			'kas_PMT' => $_POST['kas_PMT'],
+			'tanggal' => $_POST['tanggal'],
+			'tempat' => $_POST['tempat'],
+			'jam_mulai' => $_POST['jam_mulai'],
+			'jam_selesai' => $_POST['jam_selesai'],
+			'dibuat_pada' => $_POST['dibuat_pada'],
+			'keterangan' => $_POST['keterangan'],
+			'kd_admin' => $_POST['kd_admin'],
+		];
+		$this->db->insert('jadwal', $data);
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambah Data Jadwal!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal menambah Data Jadwal!</div>');
+		}
+		redirect('admin/jadwal');
+	}
+	public function status_pmt()
+	{
+		$sudah_bayar = $this->db->get_where('status_pmt', ['kd_jadwal' => $_POST['kd_jadwal'], 'kd_ortu' => $_POST['kd_ortu']])->row_array();
+		if ($sudah_bayar) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda Sudah Bayar Menunggu Konfirmasi Admin!</div>');
+			redirect('akun/jadwal_posyandu');
+			exit;
+		}
+		$data = [
+			'status_bayar' => $_POST['status'],
+			'kd_jadwal' => $_POST['kd_jadwal'],
+			'kd_ortu' => $_POST['kd_ortu'],
+		];
+		$this->db->insert('status_pmt', $data);
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pembayaran Menunggu Konfirmasi Admin!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Bayar!</div>');
+		}
+		redirect('akun/jadwal_posyandu');
+	}
+	public function antrian()
+	{
+		$kd_ortu = $this->session->userdata('kd_ortu');
+		$sudah_antri = $this->db->get_where('antrian', ['kd_jadwal' => $_POST['kd_jadwal'], 'kd_ortu' => $kd_ortu])->row_array();
+		if ($sudah_antri) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda Sudah Antri</div>');
+			redirect('akun/jadwal_posyandu');
+			exit;
+		}
+		$kd_jadwal = $_POST['kd_jadwal'];
+		$antrian = $this->db->query("SELECT no_antrian FROM antrian WHERE kd_jadwal = $kd_jadwal ORDER BY no_antrian DESC LIMIT 1")->row_array();
+		$antrian_baru = $antrian['no_antrian'] + 1;
+		if (!$antrian) {
+			$antrian_baru = 1;
+		}
+		$data = [
+			'no_antrian' => $antrian_baru,
+			'kd_ortu' => $kd_ortu,
+			'kd_jadwal' => $_POST['kd_jadwal']
+		];
+		$this->db->insert('antrian', $data);
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil membuat no antrian!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal antri!</div>');
+		}
+		redirect('akun/jadwal_posyandu');
+	}
+	public function anggota()
+	{
+		$data = [
+			'nik' => $this->input->post('nik'),
+			'nama' => $this->input->post('nama'),
+			'posisi' => $this->input->post('posisi'),
+			'alamat' => $this->input->post('alamat'),
+			'no_tlpn' => $this->input->post('no_tlpn'),
+			'foto' => 'default-P.jpg',
+			'email' => $this->input->post('email'),
+			'password' => password_hash('mawar20', PASSWORD_DEFAULT),
+		];
+		$this->db->insert('anggota', $data);
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambah Anggota!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Menambah Anggota!</div>');
+		}
+		redirect('admin/anggota');
+	}
+	public function penimbang()
+	{
+		$balita = $this->db->get_where('balita', ['nama' => $this->input->post('nama_balita')])->row_array();
+		$data = [
+			'bb' => $this->input->post('bb'),
+			'tb' => $this->input->post('tb'),
+			'keluhan' => $this->input->post('keluhan'),
+			'tanggal' => date("Y-m-d"),
+			'kd_balita' => $balita['kd_balita']
+		];
+		$this->db->insert('penimbangan', $data);
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambah data Penimbangan!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Menambah data Penimbangan!</div>');
+		}
+		redirect('admin/data_penimbang');
+	}
+	public function data_imunisasi()
+	{
+		$balita = $this->db->get_where('balita', ['nama' => $this->input->post('nama_balita')])->row_array();
+		if ($balita) {
+			$data = [
+				'jenis_imunisasi' => $this->input->post('jenis_imunisasi'),
+				'keterangan' => $this->input->post('keterangan'),
+				'tanggal' => date("Y-m-d"),
+				'kd_balita' => $balita['kd_balita']
+			];
+			$this->db->insert('imunisasi', $data);
+			$result = $this->db->affected_rows();
+			if ($result > 0) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambah data imunisasi!</div>');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Menambah data imunisasi!</div>');
+			}
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Tolong Pilih Balita!</div>');
+		}
+		redirect('admin/imunisasi');
+	}
+	public function bayar_pmt()
+	{
+		$nominal = $this->input->post('nominal');
+		$cek_bayar = $this->db->get_where('status_pmt', ['kd_ortu' => $this->input->post('kd_ortu'), 'kd_jadwal' => $this->input->post('kd_jadwal')])->row_array();
+		if (!$cek_bayar) {
+			if ($nominal != 0) {
+				$data = [
+					'tgl_bayar' => date("Y-m-d"),
+					'status_bayar' => 'lunas',
+					'kd_jadwal' => $this->input->post('kd_jadwal'),
+					'kd_ortu' => $this->input->post('kd_ortu'),
+					'jml_balita' => $this->input->post('jml_balita')
+				];
+				$this->db->insert('status_pmt', $data);
+				$result = $this->db->affected_rows();
+				if ($result > 0) {
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Bayar PMT!</div>');
+				} else {
+					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Bayar PMT!</div>');
+				}
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Nominal Kosong!</div>');
+			}
+		} else {
+			$status = $cek_bayar['status_bayar'];
+			if ($status == "menunggu") {
+				$this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Orang Tua Sudah Bayar Status Menunggu!</div>');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Orang Tua Sudah Lunas Pada Jadwal ini!</div>');
+			}
+		}
+		redirect('admin/pmt');
+	}
+	public function kehadiran()
+	{
+		$data = [
+			'kd_jadwal' => $this->input->post('kd_jadwal'),
+			'kd_ortu' => $this->input->post('kd_ortu'),
+			'keterangan' => $this->input->post('keterangan'),
+			'status' => "hadir"
+		];
+		$this->db->insert('kehadiran', $data);
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Input Hadir!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Gagal Input Hadir!</div>');
+		}
+		redirect('admin');
 	}
 }
 

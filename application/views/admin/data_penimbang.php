@@ -18,78 +18,66 @@
                                     <li class="breadcrumb-item active">Starter</li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">Data anggota</h4>
+                            <h4 class="page-title">Data penimbangan</h4>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card-box">
                                     <div>
-                                        <button type="button" class="btn btn-success waves-effect waves-light width-xm mb-3" data-toggle="modal" data-target="#tambah">Tambah Anggota</button>
+                                        <button type="button" class="btn btn-success waves-effect waves-light width-xm mb-3" data-toggle="modal" data-target="#tambah">Tambah data</button>
                                     </div>
                                     <?= $this->session->flashdata('message'); ?>
                                     <table id="datatable" class="table table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th width="20%">NIK</th>
-                                                <th width="20%">Nama</th>
-                                                <th width="20%">Posisi</th>
-                                                <th width="10%">No_tlpn</th>
+                                                <th width="20%">Nama Balita</th>
+                                                <th width="10%">jenis kelamin</th>
+                                                <th width="10%">tanggal Lahir</th>
+                                                <th width="5%">Berat Badan</th>
+                                                <th width="5%">Tinggi badan</th>
+                                                <th width="20%">Tanggal timbang</th>
                                                 <th width="30%">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($anggota as $anggota) : ?>
+                                            <?php foreach ($penimbang as $penimbang) : ?>
                                                 <tr>
-                                                    <td><?= $anggota['nik']; ?></td>
-                                                    <td><?= $anggota['nama']; ?></td>
-                                                    <td><?= $anggota['posisi']; ?></td>
-                                                    <td><?= $anggota['no_tlpn']; ?></td>
+                                                    <td><?= $penimbang['nama']; ?></td>
+                                                    <td class="text-center"><?= $penimbang['jenis_kelamin']; ?></td>
+                                                    <!-- Format Tanggal Dari (YYYY-MM-DD) Ke (DD-MM-YYYY) -->
+                                                    <?php $arr = explode('-', $penimbang['tanggal']);
+                                                    $tgl_lahir = $arr[2] . '-' . $arr[1] . '-' . $arr[0]; ?>
+                                                    <td><?= $tgl_lahir; ?></td>
+                                                    <td><?= $penimbang['bb']; ?></td>
+                                                    <td><?= $penimbang['tb']; ?></td>
+                                                    <!-- Format Tanggal Dari (YYYY-MM-DD) Ke (DD-MM-YYYY) -->
+                                                    <?php $arr = explode('-', $penimbang['tanggal']);
+                                                    $tanggal = $arr[2] . '-' . $arr[1] . '-' . $arr[0]; ?>
+                                                    <td><?= $tanggal; ?></td>
                                                     <td class="text-center">
-                                                        <button type="button" class="btn btn-success waves-effect waves-light width-xm" data-toggle="modal" data-target="#detail<?= $anggota['kd_anggota']; ?>">Detail</button>
-                                                        <button type="button" class="btn btn-primary waves-effect waves-light width-xm" data-toggle="modal" data-target="#ubah_anggota<?= $anggota['kd_anggota']; ?>">ubah</button>
-                                                        <button type="button" class="btn btn-danger waves-effect waves-light width-xm" data-toggle="modal" data-target="#hapus<?= $anggota['kd_anggota']; ?>">hapus</button>
+                                                        <button type="button" class="btn btn-success waves-effect waves-light width-xm" data-toggle="modal" data-target="#detail<?= $penimbang['kd_penimbang']; ?>">Detail</button>
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light width-xm" data-toggle="modal" data-target="#ubah<?= $penimbang['kd_penimbang']; ?>">ubah</button>
+                                                        <button type="button" class="btn btn-danger waves-effect waves-light width-xm" data-toggle="modal" data-target="#hapus<?= $penimbang['kd_penimbang']; ?>">hapus</button>
                                                     </td>
                                                 </tr>
 
 
 
-                                                <!-- Awal  Detail Modal Dialog -->
-                                                <div class=" modal fade" id="detail<?= $anggota['kd_anggota']; ?>" tabindex="-1">
+                                                <!-- Awal Detail Modal Dialog -->
+                                                <div class=" modal fade" id="detail<?= $penimbang['kd_penimbang']; ?>" tabindex="-1">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header border-bottom-0">
-                                                                <h4 class="modal-title">Detail Data Anggota</h4>
+                                                                <h4 class="modal-title">Detail Data penimbang</h4>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body p-3">
-                                                                <!-- NIK -->
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Nik</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nik" type="text" name="nik" value="<?= $anggota['nik']; ?>" readonly>
+                                                                    <label class="control-label">Keluhan</label>
+                                                                    <textarea class="form-control form-white" placeholder="Ada Keluhan?" type="text" name="keluhan"><?= $penimbang['keluhan']; ?></textarea>
                                                                 </div>
-                                                                <!-- NAMA -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Nama</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" value="<?= $anggota['nama']; ?>" readonly>
-                                                                </div>
-                                                                <!-- No Telp -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Alamat</label>
-                                                                    <textarea class="form-control form-white" placeholder="Alamat" type="text" name="alamat" readonly><?= $anggota['alamat']; ?></textarea>
-                                                                </div>
-                                                                <!-- No Telp -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">No Telp</label>
-                                                                    <input class="form-control form-white" placeholder="masukan tlp" type="text" name="no_tlpn" value="<?= $anggota['no_tlpn']; ?>" readonly>
-                                                                </div>
-                                                                <!-- Email -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">email</label>
-                                                                    <input class="form-control form-white" placeholder="email" type="text" name="email" value="<?= $anggota['email']; ?>" readonly>
-                                                                </div>
-
                                                                 <div class="text-right">
                                                                     <!-- Tombol Close -->
                                                                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
@@ -103,53 +91,52 @@
                                                 <!-- Akhir Detail modal dialog-->
 
 
-                                                <!-- Awal ubah_anggota  Modal Dialog -->
-                                                <div class=" modal fade" id="ubah_anggota<?= $anggota['kd_anggota']; ?>" tabindex="-1">
+                                                <!-- Awal ubah penimbang  Modal Dialog -->
+                                                <div class=" modal fade" id="ubah<?= $penimbang['kd_penimbang']; ?>" tabindex="-1">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header border-bottom-0">
-                                                                <h4 class="modal-title">Ubah Data anggota</h4>
+                                                                <h4 class="modal-title">Ubah Data penimbang</h4>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body p-3">
-                                                                <?= form_open_multipart("ubah/anggota"); ?>
-                                                                <input class="form-control form-white" type="hidden" name="kd_anggota" value="<?= $anggota['kd_anggota']; ?>">
-                                                                <!-- NIK -->
+                                                                <?= form_open_multipart("ubah/data_penimbang"); ?>
+                                                                <!-- Mengambil Data kd Penimbang -->
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Nik</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nik" type="text" name="nik" value="<?= $anggota['nik']; ?>">
+                                                                    <input class="form-control" type="hidden" name="kd_penimbang" value="<?= $penimbang['kd_penimbang']; ?>">
                                                                 </div>
-                                                                <!-- NAMA -->
+                                                                <!-- Nama Balita -->
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Nama</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" value="<?= $anggota['nama']; ?>">
+                                                                    <label class="control-label">Nama balita</label>
+                                                                    <?php $data_balita = $this->admin_model->data_balita(); ?>
+                                                                    <select class="custom-select" id="inputGroupSelect01" name="nama_balita">
+                                                                        <option selected value="<?= $penimbang['nama']; ?>"><?= $penimbang['nama']; ?></option>
+                                                                        <?php foreach ($data_balita as $balita) : ?>
+                                                                            <option value="<?= $balita['nama']; ?>"><?= $balita['nama']; ?></option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
+                                                                </div>
+                                                                <!-- Berat Badan -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Berat Badan</label>
+                                                                    <input class="form-control form-white" placeholder="Masukan Berat Badan" type="number" name="bb" value="<?= $penimbang['bb']; ?>">
+                                                                </div>
+                                                                <!-- Tinggi Badan -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Tinggi Badan</label>
+                                                                    <input class="form-control form-white" placeholder="Masukan Tinggi Badan" type="number" name="tb" value="<?= $penimbang['tb']; ?>">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Posisi</label>
-                                                                    <input class="form-control form-white" placeholder="Sebagai Apa?" type="text" name="posisi" value="<?= $anggota['posisi']; ?>">
-                                                                </div>
-                                                                <!-- No Telp -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Alamat</label>
-                                                                    <textarea class="form-control form-white" placeholder="Alamat" type="text" name="alamat"><?= $anggota['alamat']; ?></textarea>
-                                                                </div>
-                                                                <!-- No Telp -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">No Telp</label>
-                                                                    <input class="form-control form-white" placeholder="masukan tlp" type="text" name="no_tlpn" value="<?= $anggota['no_tlpn']; ?>">
-                                                                </div>
-                                                                <!-- Email -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Email</label>
-                                                                    <input class="form-control form-white" placeholder="email" type="text" name="email" value="<?= $anggota['email']; ?>">
+                                                                    <label class="control-label">Keluhan</label>
+                                                                    <textarea class="form-control form-white" placeholder="Ada Keluhan?" type="text" name="keluhan"><?= $penimbang['keluhan']; ?></textarea>
                                                                 </div>
                                                                 <div class="text-right">
                                                                     <!-- Tombol Batal -->
                                                                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Batal</button>
                                                                     <!-- Tombol Ubah -->
-                                                                    <button type="submit" class="btn btn-primary ml-1 waves-effect waves-light save-category">Ubah</button>
+                                                                    <button type="submit" class="btn btn-success ml-1 waves-effect waves-light save-category">Ubah</button>
                                                                 </div>
 
                                                                 </form>
@@ -159,28 +146,26 @@
                                                         <!-- Akhir modal content -->
                                                     </div>
                                                 </div>
-                                                <!-- Akhir ubah_anggota  modal dialog-->
-
 
                                                 <!-- Awal Hapus Modal Dialog -->
-                                                <div class="modal fade" id="hapus<?= $anggota['kd_anggota']; ?>" tabindex="-1">
+                                                <div class="modal fade" id="hapus<?= $penimbang['kd_penimbang']; ?>" tabindex="-1">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header border-bottom-0">
-                                                                <h4 class="modal-title">Hapus data anggota</h4>
+                                                                <h4 class="modal-title">Hapus data penimbang</h4>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body p-3">
                                                                 <h5>Yakin ingin menghapus?</h5>
-                                                                <?= form_open_multipart("hapus/anggota"); ?>
+                                                                <?= form_open_multipart("hapus/data_penimbang"); ?>
                                                                 <div class="mb-3">
-                                                                    <input type="hidden" class="form-control" id="kd_anggota" name="kd_anggota" value="<?= $anggota['kd_anggota'] ?> " readoly>
+                                                                    <input type="hidden" class="form-control" id="kd_penimbang" name="kd_penimbang" value="<?= $penimbang['kd_penimbang'] ?> ">
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label for="nama" class="col-form-label">anggota Brnama :</label>
-                                                                    <input type="text" class="form-control" id="nama" name="nama" value="<?= $anggota['nama'] ?>" readoly>
+                                                                    <label for="nama" class="col-form-label">Data Penimbang Balita :</label>
+                                                                    <input type="text" class="form-control" id="nama" name="nama" value="<?= $penimbang['nama'] ?>" readoly>
                                                                 </div>
                                                                 <div class="text-right">
                                                                     <!-- Tombol Batal -->
@@ -205,42 +190,37 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header border-bottom-0">
-                                                    <h4 class="modal-title">Tambah Anggota</h4>
+                                                    <h4 class="modal-title">Tambah Data penimbang</h4>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body p-3">
-                                                    <?= form_open_multipart("insert/anggota"); ?>
+                                                    <?= form_open_multipart("insert/penimbang"); ?>
                                                     <!-- NIK -->
                                                     <div class="form-group">
-                                                        <label class="control-label">NIK</label>
-                                                        <input class="form-control form-white" placeholder="masukan nik" type="number" name="nik">
+                                                        <label class="control-label">Nama balita</label>
+                                                        <?php $data_balita = $this->admin_model->data_balita(); ?>
+                                                        <select class="custom-select" id="inputGroupSelect01" name="nama_balita">
+                                                            <option selected>Pilih</option>
+                                                            <?php foreach ($data_balita as $balita) : ?>
+                                                                <option value="<?= $balita['nama']; ?>"><?= $balita['nama']; ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
                                                     </div>
-                                                    <!-- NAMA -->
+                                                    <!-- Berat Badan -->
                                                     <div class="form-group">
-                                                        <label class="control-label">Nama</label>
-                                                        <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" required>
+                                                        <label class="control-label">Berat Badan</label>
+                                                        <input class="form-control form-white" placeholder="Masukan Berat Badan" type="number" name="bb">
                                                     </div>
-                                                    <!-- Posisi -->
+                                                    <!-- Tinggi Badan -->
                                                     <div class="form-group">
-                                                        <label class="control-label">Posisi</label>
-                                                        <input class="form-control form-white" placeholder="Sebagai Apa?" type="text" name="posisi" required>
+                                                        <label class="control-label">Tinggi Badan</label>
+                                                        <input class="form-control form-white" placeholder="Masukan Tinggi Badan" type="number" name="tb">
                                                     </div>
-                                                    <!-- No Telp -->
                                                     <div class="form-group">
-                                                        <label class="control-label">Alamat</label>
-                                                        <textarea class="form-control form-white" placeholder="Alamat" type="text" name="alamat"></textarea>
-                                                    </div>
-                                                    <!-- No Telp -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">No Telp</label>
-                                                        <input class="form-control form-white" placeholder="masukan tlp" type="number" name="no_tlpn">
-                                                    </div>
-                                                    <!-- Email -->
-                                                    <div class="form-group">
-                                                        <label class="control-label">Email</label>
-                                                        <input class="form-control form-white" placeholder="email" type="text" name="email">
+                                                        <label class="control-label">Keluhan</label>
+                                                        <textarea class="form-control form-white" placeholder="Ada Keluhan?" type="text" name="keluhan"></textarea>
                                                     </div>
                                                     <div class="text-right">
                                                         <!-- Tombol Batal -->
@@ -266,12 +246,8 @@
                 </div>
                 <!-- end row -->
                 <!-- end page title -->
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
-
     </div>
 
     <!-- ============================================================== -->

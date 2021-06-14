@@ -32,7 +32,10 @@ class Akun_model extends CI_Model
     public function jumlah_balita()
     {
         $kd_ortu = $this->session->userdata('kd_ortu');
-        $jumlah_balita = $this->db->query("SELECT * FROM balita WHERE kd_ortu=$kd_ortu")->num_rows();
+        $this->db->select('*');
+        $this->db->from('balita');
+        $this->db->where('kd_ortu', $kd_ortu);
+        $jumlah_balita = $this->db->get()->num_rows();
         return $jumlah_balita;
     }
     public function data_jadwal()
@@ -43,15 +46,31 @@ class Akun_model extends CI_Model
     public function data_pmt()
     {
         $kd_ortu = $this->session->userdata('kd_ortu');
-        $query = $this->db->Query("SELECT * FROM `pmt`
-                                    JOIN `balita` ON `pmt`.`kd_balita`=`balita`.`kd_balita`
-                                    JOIN `jadwal` ON `pmt`.`kd_jadwal`=`jadwal`.`kd_jadwal`
-                                    WHERE `pmt`.`kd_balita` = ANY (SELECT kd_balita FROM balita WHERE kd_ortu = $kd_ortu)")->result_array();
+        $this->db->select('*');
+        $this->db->from('status_pmt');
+        $this->db->join('orang_tua', 'status_pmt.kd_ortu = orang_tua.kd_ortu', 'left');
+        $this->db->join('jadwal', 'status_pmt.kd_jadwal = jadwal.kd_jadwal', 'left');
+        $this->db->where('orang_tua.kd_ortu', "$kd_ortu");
+        $query = $this->db->get()->result_array();
         return $query;
     }
     public function data_kegiatan()
     {
         $query = $this->db->query("SELECT * FROM kegiatan")->result_array();
         return $query;
+    }
+    public function cek_balita()
+    {
+        $query = $this->db->get_where('balita', ['kd_ortu' => $this->session->userdata('kd_ortu')])->result_array();
+        return $query;
+    }
+    public function status_pmt($kd_jadwal)
+    {
+        $query = $this->db->get_where('status_pmt', ['kd_jadwal' => $kd_jadwal, 'kd_ortu' => $this->session->userdata('kd_ortu')])->row_array();
+        $hasil = $this->db->affected_rows();
+        if ($hasil > 0) {
+            return $query;
+        }
+        return $query = ['status_bayar' => 'belum lunas'];
     }
 }

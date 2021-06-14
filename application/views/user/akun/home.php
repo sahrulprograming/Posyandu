@@ -19,6 +19,7 @@
                         </div>
                     </div>
                 </div>
+                <?= $this->session->flashdata('message'); ?>
                 <div class="row">
                     <?php foreach ($kegiatan as $kegiatan) : ?>
                         <div class="col-lg-4 col-md-6">

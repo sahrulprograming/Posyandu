@@ -11,7 +11,12 @@ class Auth extends CI_Controller
     }
     public function login()
     {
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email', [
+        if ($this->session->userdata('role') == 'Admin' or $this->session->userdata('role') == 'Bidan') {
+            redirect('admin');
+        } else if ($this->session->userdata('role') == 'User') {
+            redirect('akun');
+        }
+        $this->form_validation->set_rules('email', 'Email', 'required|trim', [
             'required' => 'Email wajib di isi',
             'valid_email' => 'Email yang anda masukkan tidak valid',
         ]);
@@ -40,22 +45,26 @@ class Auth extends CI_Controller
         if ($orang_tua or $admin or $bidan) {
             // cek pasword Sesuai yang Login 
             if (password_verify($password, $orang_tua['password'])) {
-                $nik = $orang_tua['nik'];
-                $data = [
-                    'kd_ortu' => $orang_tua['kd_ortu'],
-                    'role'  => 'User',
-                    'id_menu' => 2
-                ];
-                $this->session->set_userdata($data);
-                if ($nik == 0) {
-                    redirect('auth/form_data_diri');
+                if ($orang_tua['status'] == 'aktif') {
+                    $data = [
+                        'kd_ortu' => $orang_tua['kd_ortu'],
+                        'role'  => 'User',
+                        'id_menu' => 2
+                    ];
+                    $this->session->set_userdata($data);
+                    if ($orang_tua['nik'] == 0) {
+                        redirect('auth/form_data_diri');
+                    } else {
+                        redirect('akun');
+                    }
                 } else {
-                    redirect('akun');
+                    redirect('user/non_aktif');
                 }
             } elseif (password_verify($password, $admin['password'])) {
                 $data = [
                     'kd_admin' => $admin['kd_admin'],
-                    'role'  => 'Admin'
+                    'role'  => 'Admin',
+                    'id_menu' => 1
                 ];
                 $this->session->set_userdata($data);
                 redirect('admin');
@@ -66,7 +75,7 @@ class Auth extends CI_Controller
                     'id_menu' => 3
                 ];
                 $this->session->set_userdata($data);
-                redirect('bidan');
+                redirect('admin');
             }
             // Else Jika Password Salah
             else {
@@ -76,13 +85,16 @@ class Auth extends CI_Controller
         }
         // Else Jika email Tidak Ditemukan
         else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum terdaftar</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email / NIK belum terdaftar</div>');
             redirect('auth/login');
         }
     }
 
     public function form_data_diri()
     {
+        if ($this->session->userdata('role') == 'Admin' or $this->session->userdata('role') == 'Bidan') {
+            redirect('admin');
+        }
         $this->form_validation->set_rules('nama_lengkap', 'Nama_Lengkap', 'required|trim', [
             'required' => 'Bidang ini wajib di isi'
         ]);
@@ -118,6 +130,15 @@ class Auth extends CI_Controller
     // Function Untuk Pendaftaran Akun dengan email
     public function registrasi()
     {
+        if ($this->session->userdata('role') == 'Admin' or $this->session->userdata('role') == 'Bidan') {
+            redirect('admin');
+        } else if ($this->session->userdata('role') == 'User') {
+            redirect('akun');
+        }
+        // Validation nama yang di input
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
+            'required' => 'Nama wajib di isi',
+        ]);
         // Validation email yang di input
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[orang_tua.email]', [
             'required' => 'Email wajib di isi',
@@ -132,7 +153,7 @@ class Auth extends CI_Controller
         ]);
         // Validation Password Konfirmasi yang di input
         $this->form_validation->set_rules('password2', 'Password2', 'required|trim|min_length[6]|matches[password]', [
-            'matches' => 'Password konfirmasi tidak sama!',
+            'min_length' => 'Password minimal 6 charackter',
             'required' => 'Bidang ini wajib di isi',
             'matches' => 'Password konfirmasi tidak sama!'
         ]);
@@ -153,9 +174,12 @@ class Auth extends CI_Controller
     // Function Logout Akan membersihakan Data session
     public function logout()
     {
+        $this->session->unset_userdata('role');
         $this->session->unset_userdata('kd_ortu');
         $this->session->unset_userdata('kd_admin');
         $this->session->unset_userdata('kd_bidan');
+        $this->session->unset_userdata('id_menu');
+        $this->session->sess_destroy();
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Logout</div>');
         redirect('auth/login');
     }

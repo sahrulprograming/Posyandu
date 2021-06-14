@@ -11,15 +11,16 @@ class Auth_model extends CI_Model
     public function cek_data_login($email)
     {
         // Cek Data Email Ke database
-        $orang_tua = $this->db->get_where('orang_tua', ['email' => $email])->row_array();
-        $admin = $this->db->get_where('admin', ['email' => $email])->row_array();
-        $bidan = $this->db->get_where('bidan', ['email' => $email])->row_array();
-        $balita = $this->db->get_where('balita', ['kd_ortu' => $orang_tua['kd_ortu']])->result_array();
-        return array($orang_tua, $admin, $bidan, $balita);
+        $orang_tua = $this->db->query("SELECT * FROM orang_tua WHERE email = '$email' OR nik = '$email'")->row_array();
+        $admin = $this->db->query("SELECT * FROM `admin` WHERE email = '$email' OR nik = '$email'")->row_array();
+        $bidan = $this->db->query("SELECT * FROM bidan WHERE email = '$email' OR nik = '$email'")->row_array();
+        return array($orang_tua, $admin, $bidan);
     }
     public function tambah_user()
     {
         $data = [
+            'nama' => htmlspecialchars($this->input->post('nama', true)),
+            'foto' => 'default-P.jpg',
             'email' => htmlspecialchars($this->input->post('email', true)),
             'password' => password_hash(
                 $this->input->post('password'),

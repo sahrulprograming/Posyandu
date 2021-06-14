@@ -30,19 +30,19 @@
                                     <table id="datatable" class="table table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th width="20%">Nama Balita</th>
-                                                <th width="10%">jenis kelamin</th>
+                                                <th width="23%">Nama Balita</th>
+                                                <th width="2%">jenis kelamin</th>
                                                 <th width="10%">tanggal Lahir</th>
                                                 <th width="15%">Nama Orang tua</th>
                                                 <th width="15%">Bidan Perawat</th>
-                                                <th width="30%">Aksi</th>
+                                                <th width="35%">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php foreach ($balita as $balita) : ?>
                                                 <tr>
                                                     <td><?= $balita['nama_balita']; ?></td>
-                                                    <td><?= $balita['jenis_kelamin']; ?></td>
+                                                    <td class="text-center"><?= $balita['jenis_kelamin']; ?></td>
                                                     <td><?= $balita['tgl_lahir']; ?></td>
                                                     <td><?= $balita['nama_orang_tua']; ?></td>
                                                     <td><?= $balita['nama_bidan']; ?></td>
@@ -55,7 +55,7 @@
 
 
 
-                                                <!-- Awal  Detail Modal Dialog -->
+                                                <!-- Awal Detail Modal Dialog -->
                                                 <div class=" modal fade" id="detail<?= $balita['kd_balita']; ?>" tabindex="-1">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -88,20 +88,31 @@
                                                                     <label class="control-label">Tanggal Lahir</label>
                                                                     <input class="form-control form-white" placeholder="masukan tlp" type="text" name="tgl_lahir" value="<?= $balita['tgl_lahir']; ?>" readonly>
                                                                 </div>
+                                                                <!-- Query ke database Cek Data penimbang kd_balita -->
+                                                                <?php
+                                                                $data_balita = cek_penimbangan($balita['kd_balita']);
+                                                                if (!$data_balita) {
+                                                                    $data_balita = [
+                                                                        'bb' => '',
+                                                                        'tb' => '',
+                                                                        'keluhan' => '',
+                                                                    ];
+                                                                }
+                                                                ?>
                                                                 <!-- Berat Badan -->
                                                                 <div class="form-group">
                                                                     <label class="control-label">Berat Badan</label>
-                                                                    <input class="form-control form-white" placeholder="bb" type="text" name="bb" value="<?= $balita['bb']; ?> Kg" readonly>
+                                                                    <input class="form-control form-white" placeholder="bb" type="text" name="bb" value="<?= $data_balita['bb']; ?> Kg" readonly>
                                                                 </div>
                                                                 <!-- Tinggi Badan -->
                                                                 <div class="form-group">
                                                                     <label class="control-label">Tinggi Badan</label>
-                                                                    <input class="form-control form-white" placeholder="tb" type="text" name="tb" value="<?= $balita['tb']; ?> Cm" readonly>
+                                                                    <input class="form-control form-white" placeholder="tb" type="text" name="tb" value="<?= $data_balita['tb']; ?> Cm" readonly>
                                                                 </div>
                                                                 <!-- Keluhan -->
                                                                 <div class="form-group">
                                                                     <label class="control-label">Keluhan</label>
-                                                                    <textarea class="form-control form-white" placeholder="Keluhan" type="text" name="keluhan" readonly><?= $balita['keluhan']; ?></textarea>
+                                                                    <textarea class="form-control form-white" placeholder="Keluhan" type="text" name="keluhan" readonly><?= $data_balita['keluhan']; ?></textarea>
                                                                 </div>
                                                                 <!-- Nama Ortu -->
                                                                 <div class="form-group">
@@ -129,7 +140,7 @@
                                                 <!-- Akhir Detail modal dialog-->
 
 
-                                                <!-- Awal ubah_balita  Modal Dialog -->
+                                                <!-- Awal ubah balita  Modal Dialog -->
                                                 <div class=" modal fade" id="ubah_balita<?= $balita['kd_balita']; ?>" tabindex="-1">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -141,31 +152,58 @@
                                                             </div>
                                                             <div class="modal-body p-3">
                                                                 <?= form_open_multipart("ubah/balita"); ?>
-                                                                <input class="form-control form-white" type="hidden" name="kd_balita" value="<?= $balita['kd_balita']; ?>">
+                                                                <input class="form-control form-white" type="hidden" name="kd_balita" value="<?= $balita['kd_balita']; ?>" readonly>
                                                                 <!-- NIK -->
                                                                 <div class="form-group">
                                                                     <label class="control-label">Nik</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nik" type="text" name="nik" value="<?= $balita['nik']; ?>">
+                                                                    <input class="form-control form-white" placeholder="masukan nik" type="number" name="nik" value="<?= $balita['nik']; ?>">
                                                                 </div>
                                                                 <!-- NAMA -->
                                                                 <div class="form-group">
                                                                     <label class="control-label">Nama</label>
                                                                     <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" value="<?= $balita['nama_balita']; ?>">
                                                                 </div>
-                                                                <!-- No Telp -->
+                                                                <!-- Jenis Kelamin -->
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Alamat</label>
-                                                                    <textarea class="form-control form-white" placeholder="Alamat" type="text" name="alamat"><?= $balita['nama_bidan']; ?></textarea>
+                                                                    <label class="control-label">Jenis kelamin</label>
+                                                                    <select class="custom-select" id="inputGroupSelect01" name="jenis_kelamin">
+                                                                        <option selected><?= $balita['jenis_kelamin']; ?></option>
+                                                                        <option value="P">Perempuan</option>
+                                                                        <option value="L">Laki - Laki</option>
+                                                                    </select>
                                                                 </div>
-                                                                <!-- No Telp -->
+                                                                <!-- tanggal Lahir -->
                                                                 <div class="form-group">
-                                                                    <label class="control-label">No Telp</label>
-                                                                    <input class="form-control form-white" placeholder="masukan tlp" type="text" name="no_tlpn" value="<?= $balita['bb']; ?>">
+                                                                    <label class="control-label">Tanggal Lahir</label>
+                                                                    <input class="form-control form-white" type="date" name="tgl_lahir" value="<?= $balita['tgl_lahir']; ?>">
                                                                 </div>
-                                                                <!-- Email -->
+                                                                <!-- Nama Ortu -->
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Email</label>
-                                                                    <input class="form-control form-white" placeholder="email" type="text" name="email" value="<?= $balita['tb']; ?>">
+                                                                    <label class="control-label">Nama orang tua</label>
+                                                                    <?php
+                                                                    $ortu_sekarang = $balita['nama_orang_tua'];
+                                                                    $orang_tua = $this->db->query("SELECT nama FROM orang_tua WHERE nama != '$ortu_sekarang'")->result_array();
+                                                                    ?>
+                                                                    <select class="custom-select" id="inputGroupSelect01" name="nama_ortu">
+                                                                        <option selected><?= $balita['nama_orang_tua']; ?></option>
+                                                                        <?php foreach ($orang_tua as $orang_tua) : ?>
+                                                                            <option value="<?= $orang_tua['nama']; ?>"><?= $orang_tua['nama']; ?></option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
+                                                                </div>
+                                                                <!-- Nama Bidan -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Nama Bidan Perawat</label>
+                                                                    <?php
+                                                                    $bidan_sekarang = $balita['nama_bidan'];
+                                                                    $bidan = $this->db->query("SELECT nama From bidan WHERE nama != '$bidan_sekarang'")->result_array();
+                                                                    ?>
+                                                                    <select class="custom-select" id="inputGroupSelect01" name="nama_bidan">
+                                                                        <option selected value="<?= $balita['nama_bidan']; ?>"><?= $balita['nama_bidan']; ?></option>
+                                                                        <?php foreach ($bidan as $bidan) : ?>
+                                                                            <option value="<?= $bidan['nama']; ?>"><?= $bidan['nama']; ?></option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="text-right">
                                                                     <!-- Tombol Batal -->
@@ -173,7 +211,6 @@
                                                                     <!-- Tombol Ubah -->
                                                                     <button type="submit" class="btn btn-primary ml-1 waves-effect waves-light save-category">Ubah</button>
                                                                 </div>
-
                                                                 </form>
                                                             </div>
                                                             <!-- Akhir modal body-->
@@ -182,7 +219,6 @@
                                                     </div>
                                                 </div>
                                                 <!-- Akhir ubah_balita  modal dialog-->
-
 
                                                 <!-- Awal Hapus Modal Dialog -->
                                                 <div class="modal fade" id="hapus<?= $balita['kd_balita']; ?>" tabindex="-1">
@@ -236,7 +272,7 @@
                                                     <?= form_open_multipart("insert/balita"); ?>
                                                     <!-- NIK -->
                                                     <div class="form-group">
-                                                        <label class="control-label">Nik</label>
+                                                        <label class="control-label">NIK</label>
                                                         <input class="form-control form-white" placeholder="masukan nik" type="number" name="nik" required>
                                                     </div>
                                                     <!-- NAMA -->
@@ -244,20 +280,45 @@
                                                         <label class="control-label">Nama</label>
                                                         <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" required>
                                                     </div>
-                                                    <!-- No Telp -->
+                                                    <!-- Jenis Kelamin -->
                                                     <div class="form-group">
-                                                        <label class="control-label">Alamat</label>
-                                                        <textarea class="form-control form-white" placeholder="Alamat" type="text" name="alamat" required></textarea>
+                                                        <label for="">Jenis Kelamin</label>
+                                                        <select class="custom-select" id="inputGroupSelect01" name="jenis_kelamin">
+                                                            <option selected>Pilih</option>
+                                                            <option value="P">Perempuan</option>
+                                                            <option value="L">Laki - Laki</option>
+                                                        </select>
                                                     </div>
                                                     <!-- No Telp -->
                                                     <div class="form-group">
-                                                        <label class="control-label">No Telp</label>
-                                                        <input class="form-control form-white" placeholder="masukan tlp" type="number" name="no_tlpn" required>
+                                                        <label class="control-label">Tanggal Lahir</label>
+                                                        <input class="form-control form-white" placeholder="masukan tlp" type="date" name="tgl_lahir" required>
                                                     </div>
-                                                    <!-- Email -->
+                                                    <!-- Orang Tua -->
                                                     <div class="form-group">
-                                                        <label class="control-label">Email</label>
-                                                        <input class="form-control form-white" placeholder="email" type="text" name="email" required>
+                                                        <label class="control-label">Nama orang tua</label>
+                                                        <?php
+                                                        $orang_tua = $this->db->query("SELECT nama FROM orang_tua")->result_array();
+                                                        ?>
+                                                        <select class="custom-select" id="inputGroupSelect01" name="nama_bidan">
+                                                            <option selected>Pilih</option>
+                                                            <?php foreach ($orang_tua as $orang_tua) : ?>
+                                                                <option value="<?= $orang_tua['nama']; ?>"><?= $orang_tua['nama']; ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
+                                                    <!-- Bidan -->
+                                                    <div class="form-group">
+                                                        <label class="control-label">Bidan Perawat</label>
+                                                        <?php $bidan = $this->db->query("SELECT nama From bidan")->result_array();
+
+                                                        ?>
+                                                        <select class="custom-select" id="inputGroupSelect01" name="nama_bidan">
+                                                            <option selected>Pilih</option>
+                                                            <?php foreach ($bidan as $bidan) : ?>
+                                                                <option value="<?= $bidan['nama']; ?>"><?= $bidan['nama']; ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
                                                     </div>
                                                     <div class="text-right">
                                                         <!-- Tombol Batal -->
@@ -283,12 +344,8 @@
                 </div>
                 <!-- end row -->
                 <!-- end page title -->
-
             </div> <!-- container-fluid -->
-
         </div> <!-- content -->
-
-
     </div>
 
     <!-- ============================================================== -->

@@ -27,7 +27,7 @@
 
                 <!-- Modal -->
                 <div class="modal fade" id="posting" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <?= form_open_multipart("admin/upload_kegiatan"); ?>
                             <div class="modal-header">
@@ -37,9 +37,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="formFileSm" class="form-label">Pilih Gambar</label>
-                                    <input class="form-control form-control-sm" id="formFileSm" name="gambar" type="file">
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile01" name="gambar">
+                                        <label class="custom-file-label" for="inputGroupFile01">Pilih Gambar</label>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="judul" class="form-label">Judul Kegiatan</label>
@@ -82,12 +84,23 @@
                                             <!-- Button trigger modal -->
                                             <a href="#" class="text-primary" data-toggle="modal" data-target="#keterangan<?= $kegiatan['kd_kegiatan']; ?>">Selengkapnya <i class="mdi mdi-arrow-right ml-1"></i></a>
                                         </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ubah<?= $kegiatan['kd_kegiatan']; ?>">Ubah</button>
+                                            </div>
+                                            <div class="col">
+                                            </div>
+                                            <div class="col">
+
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#hapus<?= $kegiatan['kd_kegiatan']; ?>">Hapus</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Modal -->
+                        <!-- Awal selengkapnya Modal -->
                         <div class="modal fade" id="keterangan<?= $kegiatan['kd_kegiatan']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
@@ -114,6 +127,87 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Akhir slengkapnya Modal -->
+
+                        <!-- Awal Ubah Kegiatan -->
+                        <div class="modal fade" id="ubah<?= $kegiatan['kd_kegiatan']; ?>" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0">
+                                        <h4 class="modal-title">Ubah data kegiatan</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body p-3">
+                                        <?= form_open_multipart("ubah/kegiatan"); ?>
+                                        <div class="mb-3">
+                                            <input type="hidden" name="kd_kegiatan" value="<?= $kegiatan['kd_kegiatan']; ?>">
+                                        </div>
+                                        <div class="card rounded mx-auto d-block" style="width: 18rem;">
+                                            <img class="card-img-top" src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="Card image cap">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="formFileMultiple" class="form-label">Ubah Foto Kegiatan</label>
+                                            <input class="form-control" type="file" id="formFileMultiple" name="foto_kegiatan" multiple>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nama" class="col-form-label">Ubah Judul</label>
+                                            <input type="text" class="form-control" id="judul" name="judul" value="<?= $kegiatan['judul'] ?>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nama" class="col-form-label">Ubah Judul</label>
+                                            <textarea type="text" class="form-control" id="keterangan" name="keterangan" rows="8"><?= $kegiatan['keterangan'] ?></textarea>
+                                        </div>
+                                        <div class="text-right">
+                                            <!-- Tombol Batal -->
+                                            <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Batal</button>
+                                            <!-- Tombol Ubah -->
+                                            <button type="submit" class="btn btn-primary ml-1 waves-effect waves-light save-category">Ubah</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <!-- Akhir modal body-->
+                                </div>
+                                <!-- Akhir modal content -->
+                            </div>
+                        </div>
+                        <!-- Akhir Ubah Kegiatan -->
+                        <!-- Awal Hapus Kegiatan Modal -->
+                        <div class="modal fade" id="hapus<?= $kegiatan['kd_kegiatan']; ?>" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0">
+                                        <h4 class="modal-title">Hapus data kegiatan</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body p-3">
+                                        <h5>Yakin ingin menghapus?</h5>
+                                        <?= form_open_multipart("hapus/kegiatan"); ?>
+                                        <div class="mb-3">
+                                            <input type="hidden" name="kd_kegiatan" value="<?= $kegiatan['kd_kegiatan']; ?>">
+                                            <input type="hidden" name="foto_kegiatan" value="<?= $kegiatan['foto_kegiatan']; ?>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nama" class="col-form-label">kegiatan dengen Judul :</label>
+                                            <input type="text" class="form-control" id="nama" name="nama" value="<?= $kegiatan['judul'] ?>" readoly>
+                                        </div>
+                                        <div class="text-right">
+                                            <!-- Tombol Batal -->
+                                            <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Batal</button>
+                                            <!-- Tombol Ubah -->
+                                            <button type="submit" class="btn btn-danger ml-1 waves-effect waves-light save-category">Hapus</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <!-- Akhir modal body-->
+                                </div>
+                                <!-- Akhir modal content -->
+                            </div>
+                        </div>
+                        <!-- Akhir Hapus Kegiatan Modal -->
                     <?php endforeach; ?>
                 </div>
                 <!-- row end -->

@@ -4,7 +4,7 @@
 
         <li class="dropdown notification-list">
             <a class="nav-link dr nav-user mr-0 waves-effect waves-light nav-link right-bar-toggle waves-effect waves-light" href="javascript:void(0);">
-                <img src="<?php echo base_url() . 'assets' ?>/images/users/avatar-4.jpg" alt="user-image" class="rounded-circle">
+                <img src="<?= base_url('assets_tinta') ?>/img/profile/default-P.jpg" alt="user-image" class="rounded-circle">
                 <span class="pro-user-name ml-1">
                     <?= $profile['nama']; ?>
                 </span>

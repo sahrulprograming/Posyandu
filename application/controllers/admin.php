@@ -6,6 +6,7 @@ class Admin extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		cek_status_login();
 		$this->load->library('form_validation');
 		$this->load->model('Admin_model', 'admin_model');
 		$this->load->model('Akun_model', 'akun_model');
@@ -17,6 +18,7 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
+		$data['jadwal'] = $this->admin_model->jadwal_hari_ini();
 		$data['title'] = 'Dasboard | Posyandu';
 		$data['profile'] = $this->data_admin;
 		$data['kegiatan'] = $this->kegiatan;
@@ -39,6 +41,18 @@ class Admin extends CI_Controller
 		$this->load->view('template/rightbar', $data);
 		$this->load->view('template/footer');
 	}
+	public function balita($value = '')
+	{
+		$data['title'] = 'Data Balita | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['balita'] = $this->admin_model->profile_balita();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/balita');
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
+	}
 	public function bidan($value = '')
 	{
 		$data['title'] = 'Data Bidan | Posyandu';
@@ -51,25 +65,29 @@ class Admin extends CI_Controller
 		$this->load->view('template/rightbar', $data);
 		$this->load->view('template/footer');
 	}
-	public function balita($value = '')
+	public function pmt($value = '')
 	{
-		$data['title'] = 'Data Balita | Posyandu';
+		$data['title'] = 'Data PMT | Posyandu';
 		$data['profile'] = $this->data_admin;
-		$data['balita'] = $this->admin_model->data_balita();
+		$data['data_kas_pmt'] = $this->admin_model->data_kas_pmt();
 		$this->load->view('template/header', $data);
 		$this->load->view('template/topbar', $data);
 		$this->load->view('admin/sidebar', $data);
-		$this->load->view('admin/balita');
+		$this->load->view('admin/pmt', $data);
 		$this->load->view('template/rightbar', $data);
 		$this->load->view('template/footer');
 	}
-	public function anggota($value = '')
+	public function data_penimbang()
 	{
-		$this->load->view('admin/anggota');
-	}
-	public function jadwal($value = '')
-	{
-		$this->load->view('admin/jadwal');
+		$data['title'] = 'Data Penimbang | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['penimbang'] = $this->admin_model->data_penimbang();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/data_penimbang');
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
 	}
 	public function visi_misi($value = '')
 	{
@@ -77,32 +95,49 @@ class Admin extends CI_Controller
 	}
 	public function laporan_posyandu($value = '')
 	{
-		$this->load->view('admin/laporan_posyandu');
+		$data['title'] = 'Laporan Posyandu | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/laporan_posyandu', $data);
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
 	}
 
-	public function pmt($value = '')
+	public function jadwal($value = '')
 	{
-		$this->load->view('admin/pmt');
+		$data['title'] = 'Jadwal Posyandu | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['jadwal'] = $this->admin_model->data_jadwal();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/jadwal');
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
 	}
 
-
-	public function data_penimbang_bayi($value = '')
-	{
-		$this->load->view('admin/data_penimbang_bayi');
-	}
+	// Imunisasi
 	public function imunisasi($value = '')
 
 	{
-		$this->load->view('admin/imunisasi');
+		$data['title'] = 'Imunisasi | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['imunisasi'] = $this->admin_model->data_imunisasi();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/imunisasi', $data);
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
 	}
 
-	public function detailPMT($value = '')
-	{
-		$this->load->view('admin/detailPMT');
-	}
+
+	// kegiatan
 	public function kegiatan()
 	{
-		$data['title'] = 'Home | Posyandu';
+		$data['title'] = 'Kegiatan | Posyandu';
 		$data['profile'] = $this->data_admin;
 		$data['kegiatan'] = $this->kegiatan;
 		$this->load->view('template/header', $data);
@@ -114,13 +149,13 @@ class Admin extends CI_Controller
 	}
 	public function upload_kegiatan()
 	{
-		$data['title'] = 'Home | Posyandu';
-		$data['profile'] = $this->data_admin;
-		$data['kegiatan'] = $this->kegiatan;
 
 		$this->form_validation->set_rules('judul', 'Judul', 'required');
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 		if ($this->form_validation->run() == false) {
+			$data['title'] = 'Kegiatan | Posyandu';
+			$data['profile'] = $this->data_admin;
+			$data['kegiatan'] = $this->kegiatan;
 			$this->load->view('template/header', $data);
 			$this->load->view('template/topbar', $data);
 			$this->load->view('admin/sidebar', $data);
@@ -146,9 +181,35 @@ class Admin extends CI_Controller
 					echo $this->upload->display_errors();
 				}
 			} else {
-
 				redirect('admin/kegiatan');
 			}
 		}
+	}
+	public function anggota($value = '')
+	{
+		$data['title'] = 'Anggota | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['anggota'] = $this->admin_model->data_anggota();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/anggota');
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
+	}
+	public function coba()
+	{
+		$data['title'] = 'Data PMT | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['data_kas_pmt'] = $this->admin_model->data_kas_pmt();
+		$data['pmt_menunggu'] = $this->admin_model->data_pmt_menunggu();
+		$data['pmt_lunas'] = $this->admin_model->data_pmt_lunas();
+		$data['pmt_belum_bayar'] = $this->admin_model->data_pmt_belum_bayar();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/coba');
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
 	}
 }

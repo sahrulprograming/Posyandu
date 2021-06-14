@@ -37,7 +37,9 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="">NIK</label>
-                                            <input type="text" class="form-control" value="<?= $balita['nik']; ?>" readonly>
+                                            <input type="text" class="form-control" value="<?php if (isset($balita['nik'])) {
+                                                                                                echo $balita['nik'];
+                                                                                            }; ?>" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="">Nama balita</label>
@@ -49,11 +51,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">Berat Badan</label>
-                                            <input type="text" class="form-control" value="<?= $balita['bb']; ?> kg" readonly>
+                                            <input type="text" class="form-control" value="<?php if (isset($balita['bb'])) {
+                                                                                                echo $balita['bb'];
+                                                                                            }; ?> kg" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="">Tinggi Badan</label>
-                                            <input type="text" class="form-control" value="<?= $balita['tb']; ?> cm" readonly>
+                                            <input type="text" class="form-control" value="<?php if (isset($balita['tb'])) {
+                                                                                                echo $balita['tb'];
+                                                                                            }; ?> cm" readonly>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -76,6 +82,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
+                                        <?= form_open_multipart("ubah/balita"); ?>
                                         <div class="form-group">
                                             <label for="">NIK</label>
                                             <input type="text" class="form-control" value="<?= $balita['nik']; ?>" readonly>
@@ -88,26 +95,21 @@
                                             <label for="">Jenis Kelamin</label>
                                             <select class="custom-select" id="inputGroupSelect01">
                                                 <option selected><?= $balita['jenis_kelamin']; ?></option>
-                                                <option value="<?php if ($balita['jenis_kelamin'] == "Perempuan") {
-                                                                    echo "Laki - Laki";
-                                                                } else {
-                                                                    echo "Perempuan";
-                                                                } ?>">
-                                                    <?php if ($balita['jenis_kelamin'] == "Perempuan") {
-                                                        echo "Laki - Laki";
-                                                    } else {
-                                                        echo "Perempuan";
-                                                    } ?>
-                                                </option>
+                                                <option value="L">Laki - Laki</option>
+                                                <option value="P">Perempuan</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="">Berat Badan</label>
-                                            <input type="text" class="form-control" value="<?= $balita['bb']; ?> kg" readonly>
+                                            <input type="text" class="form-control" value="<?php if (isset($balita['bb'])) {
+                                                                                                echo $balita['bb'];
+                                                                                            }; ?>  kg" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="">Tinggi Badan</label>
-                                            <input type="text" class="form-control" value="<?= $balita['tb']; ?> cm" readonly>
+                                            <input type="text" class="form-control" value="<?php if (isset($balita['tb'])) {
+                                                                                                echo $balita['tb'];
+                                                                                            }; ?>  cm" readonly>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

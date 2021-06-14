@@ -32,8 +32,8 @@
                                             <tr>
                                                 <th width="20%">Nama</th>
                                                 <th width="20%">NIK</th>
-                                                <th width="20%">No KK</th>
-                                                <th width="10%">Tlp</th>
+                                                <th width="20%">Tlp</th>
+                                                <th width="10%">Status</th>
                                                 <th width="30%">Aksi</th>
                                             </tr>
                                         </thead>
@@ -42,8 +42,8 @@
                                                 <tr>
                                                     <td><?= $orang_tua['nama']; ?></td>
                                                     <td><?= $orang_tua['nik']; ?></td>
-                                                    <td><?= $orang_tua['no_kk']; ?></td>
                                                     <td><?= $orang_tua['no_tlpn']; ?></td>
+                                                    <td class="text-center"><?= $orang_tua['status']; ?></td>
                                                     <td class="text-center">
                                                         <button type="button" class="btn btn-success waves-effect waves-light width-xm" data-toggle="modal" data-target="#detail<?= $orang_tua['kd_ortu']; ?>">Detail</button>
                                                         <button type="button" class="btn btn-primary waves-effect waves-light width-xm" data-toggle="modal" data-target="#ubah_ortu<?= $orang_tua['kd_ortu']; ?>">ubah</button>
@@ -167,7 +167,6 @@
                                                                     <label for="">Status</label>
                                                                     <select class="custom-select" id="inputGroupSelect01" name="status">
                                                                         <option selected><?= $orang_tua['status']; ?></option>
-                                                                        <option value="prosess">prosess</option>
                                                                         <option value="aktif">aktif</option>
                                                                         <option value="non aktif">non aktif</option>
                                                                     </select>
@@ -204,8 +203,7 @@
                                                                 <h5>Yakin ingin menghapus?</h5>
                                                                 <?= form_open_multipart("hapus/ortu"); ?>
                                                                 <div class="mb-3">
-                                                                    <label for="nama" class="col-form-label">Kd Orang Tua:</label>
-                                                                    <input type="text" class="form-control" id="kd_ortu" name="kd_ortu" value="<?= $orang_tua['kd_ortu'] ?> " readoly>
+                                                                    <input type="hidden" class="form-control" id="kd_ortu" name="kd_ortu" value="<?= $orang_tua['kd_ortu'] ?> " readoly>
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <label for="nama" class="col-form-label">Orang Tua:</label>

@@ -4,28 +4,61 @@
         <table id="datatable" class="table table-bordered dt-responsive nowrap">
             <thead>
                 <tr>
-                    <th width="20%">Nama balita</th>
-                    <th width="15%">Nominal</th>
-                    <th width="15%">Jatuh Tempo</th>
-                    <th width="15%">Tanggal Bayar</th>
-                    <th width="15%">Aksi</th>
-                    <th width="20%">Status</th>
+                    <th width="20%">Nama Orang Tua</th>
+                    <th width="20%">Nominal</th>
+                    <th width="20%">Jatuh Tempo</th>
+                    <th width="20%">Tanggal Konfirmasi</th>
+                    <th width="10%">Info</th>
+                    <th width="10%">Status</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($pmt as $pmt) : ?>
                     <tr>
+                        <?php
+                        $arr = explode('-', $pmt['tanggal']);
+                        $jatuh_tempo = $arr[2] . '-' . $arr[1] . '-' . $arr[0];
+                        $arr = explode('-', $pmt['tgl_bayar']);
+                        $konfirmasi = $arr[2] . '-' . $arr[1] . '-' . $arr[0];
+                        if ($konfirmasi == '00-00-0000') {
+                            $konfirmasi = "";
+                        }
+                        ?>
                         <td><?= $pmt['nama']; ?></td>
-                        <td><?= $pmt['kas_pmt']; ?></td>
-                        <td><?= $pmt['tanggal']; ?></td>
-                        <td><?= $pmt['tanggal_pembayaran']; ?></td>
+                        <td>Rp. <?= number_format($pmt['kas_PMT'] * $jumlah_balita, 0, ",", "."); ?></td>
+                        <td class="text-center"><?= $jatuh_tempo; ?></td>
+                        <td class="text-center"><?= $konfirmasi; ?></td>
                         <td class="aksi">
-                            <a href="#" class="btn-info btn-sm" data-toggle="modal" data-target="#exampleModalCenter<?= $pmt['kd_pmt']; ?>">Detail</a>
+                            <a href="#" class="btn-info btn-sm" data-toggle="modal" data-target="#detail<?= $pmt['kd_pmt']; ?>">Detail</a>
                         </td>
-                        <td class="aksi">
-                            <a href="#" class="btn-success btn-sm text-white"><?= $pmt['status_pembayaran']; ?></a>
+                        <td>
+                            <?php $status = $pmt['status_bayar'];
+                            if ($status == 'menunggu') : ?>
+                                <a href="#" class="btn-primary btn-sm text-white"><?= $pmt['status_bayar']; ?></a>
+                            <?php else : ?>
+                                <a href="#" class="btn-success btn-sm text-white"><?= $pmt['status_bayar']; ?></a>
+                            <?php endif; ?>
                         </td>
                     </tr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="detail<?= $pmt['kd_pmt']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end Modal -->
                 <?php endforeach; ?>
             </tbody>
         </table>
@@ -34,25 +67,3 @@
 <!-- ============================================================== -->
 <!-- End Page content -->
 <!-- ============================================================== -->
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter<?= $orang_tua['kd_ortu']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end Modal -->

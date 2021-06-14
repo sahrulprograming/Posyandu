@@ -31,13 +31,16 @@
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="<?= base_url('admin/kegiatan'); ?>">kegiatan Posyandu</a>
+                        <a href="<?= base_url('admin/anggota'); ?>">Anggota Posyandu</a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('admin/kegiatan'); ?>">Kegiatan Posyandu</a>
                     </li>
                     <li>
                         <a href="<?= base_url('admin/jadwal'); ?>">Jadwal Posyandu</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('admin/laporan_posyandu'); ?>">laporan Posyandu</a>
+                        <a href="<?= base_url('admin/laporan_posyandu'); ?>">Laporan Posyandu</a>
                     </li>
                 </ul>
             </li>

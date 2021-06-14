@@ -1,17 +1,3 @@
-<?php
-
-
-if ($this->session->userdata('notif')) {
-    $notif = $this->session->userdata('notifikasi');
-    echo "<script>
-
-        alert('$notif')
-    </script>";
-}
-
-$this->session->set_userdata('notif', true);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +9,7 @@ $this->session->set_userdata('notif', true);
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?php echo base_url('hompage/images/logo-posyandu.png') ?>">
+    <link rel="shortcut icon" href="<?php echo base_url('assets_tinta/img/logo-sm.png') ?>">
 
     <!-- App css -->
     <link href="<?php echo base_url() . 'assets2' ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -49,25 +35,29 @@ $this->session->set_userdata('notif', true);
                             </div>
                             <form action="<?= base_url('auth/registrasi'); ?>" method="post" class="">
                                 <div class="form-group mb-3">
+                                    <label for="email">Nama</label>
+                                    <input class="form-control" type="text" id="nama" name="nama" placeholder="masukkan nama" value="<?= set_value('nama'); ?>"><?= form_error('nama', '<small class="text-danger">', '</small>'); ?>
+                                </div>
+                                <div class="form-group mb-3">
                                     <label for="email">Email</label>
                                     <input class="form-control" type="text" id="email" name="email" placeholder="masukkan email" value="<?= set_value('email'); ?>"><?= form_error('email', '<small class="text-danger">', '</small>'); ?>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="password">Password</label>
+                                    <input class="form-control" type="password" name="password" placeholder="Masukkan Password">
+                                    <?= form_error('password', '<small class="text-danger">', '</small>'); ?>
+                                </div>
 
-                                    <div class="form-group mb-3">
-                                        <label for="password">Password</label>
-                                        <input class="form-control" type="password" name="password" placeholder="Masukkan Password">
-                                        <?= form_error('password', '<small class="text-danger">', '</small>'); ?>
-                                    </div>
-
-                                    <div class="form-group mb-3">
-                                        <label for="password">Konfirmasi Password</label>
-                                        <input class="form-control" type="password" name="password2" placeholder="masukkan Konfirmasi Password">
-                                        <?= form_error('password2', '<small class="text-danger">', '</small>'); ?>
-                                    </div>
+                                <div class="form-group mb-3">
+                                    <label for="password">Konfirmasi Password</label>
+                                    <input class="form-control" type="password" name="password2" placeholder="masukkan Konfirmasi Password">
+                                    <?= form_error('password2', '<small class="text-danger">', '</small>'); ?>
+                                </div>
 
 
-                                    <div class="form-group mb-0 text-center">
-                                        <button class="btn btn-success btn-block" type="submit">Daftar</button>
-                                    </div>
+                                <div class="form-group mb-0 text-center">
+                                    <button class="btn btn-success btn-block" type="submit">Daftar</button>
+                                </div>
 
                             </form>
                             <br>

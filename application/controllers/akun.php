@@ -6,6 +6,7 @@ class Akun extends CI_Controller
         public function __construct()
         {
                 parent::__construct();
+                cek_status_login();
                 $this->load->library('form_validation');
                 $this->load->model('Akun_model', 'akun_model');
                 $this->data_user = $this->akun_model->data_user();
@@ -92,6 +93,7 @@ class Akun extends CI_Controller
         public function pmt()
         {
                 $data['pmt'] = $this->pmt;
+                $data['jumlah_balita'] = $this->jumlah_balita;
                 $data['profile'] = $this->orang_tua;
                 $data['title'] = 'PMT | Posyandu';
                 $this->load->view('template/header', $data);

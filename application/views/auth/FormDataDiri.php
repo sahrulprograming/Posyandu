@@ -78,11 +78,14 @@ $this->session->set_userdata('notif', true);
                                 </div>
 
 
-                                <div class="form-group mb-0 text-center">
+                                <div class="form-group mb-2 text-center">
                                     <button class="btn btn-success btn-block" type="submit">Tambahkan</button>
                                 </div>
-
                             </form>
+                            <?= form_open_multipart("auth/logout"); ?>
+                            <div class="form-group mb-0 text-center">
+                                <button class="btn btn-success btn-block" type="submit">Logout</button>
+                            </div>
                         </div>
                         <!-- end row -->
 

@@ -1,15 +1,3 @@
-<?php
-if ($this->session->userdata('notif')) {
-    $notif = $this->session->userdata('notifikasi');
-    echo "<script>
-        alert('$notif')
-    </script>";
-}
-
-$this->session->set_userdata('notif', true);
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,10 +9,10 @@ $this->session->set_userdata('notif', true);
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?php echo base_url() . 'assets2/' ?>images/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo base_url('assets_tinta/img/logo-sm.png') ?>">
 
     <!-- App css -->
-    <link href="<?php echo base_url() . 'assets2/' ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href=" <?php echo base_url() . 'assets2/' ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url() . 'assets2/' ?>css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url() . 'assets2/' ?>css/app.min.css" rel="stylesheet" type="text/css" />
 
@@ -56,7 +44,7 @@ $this->session->set_userdata('notif', true);
                             <form action="<?= base_url('Auth/login') ?>" method="post" class="pt-2">
 
                                 <div class="form-group mb-3">
-                                    <label for="email">Email</label>
+                                    <label for="email">Email / NIK</label>
                                     <input class="form-control" type="text" name="email" id="email" placeholder="Masukan email" value="<?= set_value('nik'); ?>">
                                     <?= form_error('email', '<small class="text-danger">', '</small>'); ?>
                                 </div>
