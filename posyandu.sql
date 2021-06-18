@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Jun 2021 pada 13.23
+-- Waktu pembuatan: 19 Jun 2021 pada 00.50
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -91,6 +91,14 @@ CREATE TABLE `balita` (
   `kd_ortu` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `balita`
+--
+
+INSERT INTO `balita` (`kd_balita`, `nik`, `nama`, `jenis_kelamin`, `tgl_lahir`, `kd_bidan`, `kd_ortu`) VALUES
+(14, '5987654', 'MUHAMMAD SAHRUL SAEFULAH', 'L', '2021-06-04', 6, 19),
+(15, '234567890', 'yeshic', 'P', '2021-06-01', 6, 19);
+
 -- --------------------------------------------------------
 
 --
@@ -169,6 +177,14 @@ CREATE TABLE `jadwal` (
   `kd_admin` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `jadwal`
+--
+
+INSERT INTO `jadwal` (`kd_jadwal`, `kas_PMT`, `tanggal`, `tempat`, `jam_mulai`, `jam_selesai`, `dibuat_pada`, `keterangan`, `kd_admin`) VALUES
+(15, 50000, '2021-06-19', 'Posyandu Mawar 20', '08:15:00', '18:15:00', '2021-06-18', 'Cek Kesehatan Balita', 1),
+(16, 60000, '2021-06-30', 'Posyandu Mawar 20', '08:01:00', '10:01:00', '2021-06-19', 'Cek Kesehatan Balita', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -177,11 +193,21 @@ CREATE TABLE `jadwal` (
 
 CREATE TABLE `kas_pmt` (
   `kd_kas` int(11) NOT NULL,
+  `kd_pmt` int(11) DEFAULT NULL,
   `nominal_masuk` int(11) DEFAULT NULL,
   `nominal_keluar` int(11) DEFAULT NULL,
-  `total` int(11) DEFAULT NULL,
-  `kd_pmt` int(11) DEFAULT NULL
+  `keterangan` varchar(258) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kas_pmt`
+--
+
+INSERT INTO `kas_pmt` (`kd_kas`, `kd_pmt`, `nominal_masuk`, `nominal_keluar`, `keterangan`) VALUES
+(1, 21, 100000, NULL, ''),
+(2, 22, 120000, NULL, ''),
+(3, NULL, NULL, 100000, ''),
+(4, NULL, NULL, 20000, 'coba');
 
 -- --------------------------------------------------------
 
@@ -256,6 +282,13 @@ CREATE TABLE `orang_tua` (
   `status` enum('aktif','non aktif') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `orang_tua`
+--
+
+INSERT INTO `orang_tua` (`kd_ortu`, `nik`, `no_kk`, `nama`, `alamat`, `no_tlpn`, `foto`, `email`, `password`, `status`) VALUES
+(19, '4545678', '345678', 'yulia', 'jln yuli', '0987633456', 'default-P.jpg', 'yuli@gmail.com', '$2y$10$GnYRC8.kaxTXg6yEzTCm7.d2PYNnLpRPFKYYiirvtkyTYOTgcFb2K', 'aktif');
+
 -- --------------------------------------------------------
 
 --
@@ -285,6 +318,14 @@ CREATE TABLE `status_pmt` (
   `kd_ortu` int(11) DEFAULT NULL,
   `jml_balita` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `status_pmt`
+--
+
+INSERT INTO `status_pmt` (`kd_pmt`, `tgl_bayar`, `status_bayar`, `kd_jadwal`, `kd_ortu`, `jml_balita`) VALUES
+(21, '2021-06-18', 'lunas', 15, 19, 2),
+(22, '2021-06-19', 'lunas', 16, 19, 2);
 
 -- --------------------------------------------------------
 
@@ -447,7 +488,7 @@ ALTER TABLE `anggota`
 -- AUTO_INCREMENT untuk tabel `balita`
 --
 ALTER TABLE `balita`
-  MODIFY `kd_balita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `kd_balita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `bidan`
@@ -465,13 +506,13 @@ ALTER TABLE `imunisasi`
 -- AUTO_INCREMENT untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `kd_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `kd_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `kas_pmt`
 --
 ALTER TABLE `kas_pmt`
-  MODIFY `kd_kas` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `kd_kas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `kegiatan`
@@ -495,7 +536,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT untuk tabel `orang_tua`
 --
 ALTER TABLE `orang_tua`
-  MODIFY `kd_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `kd_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `penimbangan`
@@ -507,7 +548,7 @@ ALTER TABLE `penimbangan`
 -- AUTO_INCREMENT untuk tabel `status_pmt`
 --
 ALTER TABLE `status_pmt`
-  MODIFY `kd_pmt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `kd_pmt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `sub_menu`

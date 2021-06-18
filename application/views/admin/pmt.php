@@ -35,13 +35,14 @@ if (isset($_POST['pilih'])) {
         $menu = 'bayar';
         $nama_ortu = $_POST['nama_ortu'];
         $tanggal_jadwal = $_POST['tanggal_jadwal'];
-        $ortu = get_kd_ortu($nama_ortu);
-        if ($ortu) {
-            $kd_ortu = $ortu['kd_ortu'];
+        if (isset($nama_ortu)) {
+            $kd_ortu = get_kd_ortu($nama_ortu);
+        }
+        if ($kd_ortu) {
             $jml_balita = $this->admin_model->jumlah_balita($kd_ortu);
             $jadwal = NULL;
             if (!$tanggal_jadwal == "") {
-                $jadwal = nominal_kas($tanggal_jadwal);
+                $jadwal = get_jadwal($tanggal_jadwal);
                 if ($jadwal) {
                     $kd_jadwal = $jadwal['kd_jadwal'];
                     $total_kas = $jadwal['kas_PMT'] * $jml_balita;
@@ -95,6 +96,7 @@ if (isset($_POST['pilih'])) {
                                     <?= $this->session->flashdata('message'); ?>
                                     <div class="row mb-0">
                                         <div class="col-6 text center">
+                                            <!-- AWAL PMT BAYAR -->
                                             <form method="POST">
                                                 <div class="form-group">
                                                     <label class="control-label">Nama Orang Tua</label>
@@ -118,6 +120,7 @@ if (isset($_POST['pilih'])) {
                                                 </div>
                                                 <button type="submit" name="pilih" value="bayar" class="btn btn-success waves-effect waves-light width-xm mb-3" data-toggle="modal" data-target="#bayar_pmt">Bayar PMT</button>
                                             </form>
+                                            <!-- AKHIR PMT BAYAR -->
                                         </div>
                                         <div class="col-6">
                                             <form method="POST">
@@ -147,9 +150,11 @@ if (isset($_POST['pilih'])) {
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4"></div>
-                                        <div class="col-4 text-center"><button type="buton" class="btn btn-primary waves-effect waves-light width-xm">CEK KAS PMT</button></div>
-                                        <div class="col-4"></div>
+                                        <div class="col-4 d-none d-md-block d-lg-block"></div>
+                                        <div class="col-sm-12 text-center">
+                                            <a href="<?= base_url('admin/kas_pmt'); ?>" class="btn btn-primary waves-effect waves-light width-xm">CEK KAS PMT</a>
+                                        </div>
+                                        <div class="col-4 d-none d-md-block d-lg-block"></div>
                                     </div>
                                     <hr>
                                     <?php if ($menu === 'menunggu' or $menu === 'lunas') : ?>

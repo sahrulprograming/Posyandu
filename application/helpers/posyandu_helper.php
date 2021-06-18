@@ -54,13 +54,15 @@ function tanggal_helper($tanggal)
 function get_kd_ortu($nama_ortu)
 {
     $ci = get_instance();
-    $ci->db->select('*');
+    $ci->db->select('kd_ortu');
     $ci->db->from('orang_tua');
     $ci->db->where('nama', $nama_ortu);
     $data = $ci->db->get()->row_array();
-    return $data['kd_ortu'];
+    if ($data) {
+        return $data['kd_ortu'];
+    }
 }
-function nominal_kas($tanggal_jadwal)
+function get_jadwal($tanggal_jadwal)
 {
     $tanggal_jadwal = tanggal_helper($tanggal_jadwal);
     $ci = get_instance();

@@ -77,6 +77,18 @@ class Admin extends CI_Controller
 		$this->load->view('template/rightbar', $data);
 		$this->load->view('template/footer');
 	}
+	public function kas_pmt()
+	{
+		$data['title'] = 'KAS PMT | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['total_kas'] = $this->admin_model->data_kas();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/kas_pmt', $data);
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
+	}
 	public function data_penimbang()
 	{
 		$data['title'] = 'Data Penimbang | Posyandu';
@@ -193,17 +205,6 @@ class Admin extends CI_Controller
 		$this->load->view('template/topbar', $data);
 		$this->load->view('admin/sidebar', $data);
 		$this->load->view('admin/anggota');
-		$this->load->view('template/rightbar', $data);
-		$this->load->view('template/footer');
-	}
-	public function coba()
-	{
-		$data['title'] = 'Data PMT | Posyandu';
-		$data['profile'] = $this->data_admin;
-		$this->load->view('template/header', $data);
-		$this->load->view('template/topbar', $data);
-		$this->load->view('admin/sidebar', $data);
-		$this->load->view('admin/coba');
 		$this->load->view('template/rightbar', $data);
 		$this->load->view('template/footer');
 	}

@@ -311,6 +311,13 @@ class Ubah extends CI_Controller
 		$this->db->update('status_pmt', $data);
 		$result = $this->db->affected_rows();
 		if ($result > 0) {
+			$this->db->join('jadwal', 'status_pmt.kd_jadwal=jadwal.kd_jadwal');
+			$pmt = $this->db->get_where('status_pmt', ['kd_pmt' => $this->input->post('kd_pmt')])->row_array();
+			$kas_pmt = [
+				'kd_pmt' => $pmt['kd_pmt'],
+				'nominal_masuk' => $pmt['kas_PMT'] * $pmt['jml_balita']
+			];
+			$this->db->insert('kas_pmt', $kas_pmt);
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pembayaran Berhasil Dikonfirmasi!</div>');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Pembayaran Gagal Dikonfirmasi!</div>');
