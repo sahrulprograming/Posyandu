@@ -1,10 +1,9 @@
 <!-- Topbar Start -->
 <div class="navbar-custom">
     <ul class="list-unstyled topnav-menu float-right mb-0">
-
         <li class="dropdown notification-list">
             <a class="nav-link dr nav-user mr-0 waves-effect waves-light nav-link right-bar-toggle waves-effect waves-light" href="javascript:void(0);">
-                <img src="<?= base_url('assets_tinta') ?>/img/profile/default-P.jpg" alt="user-image" class="rounded-circle">
+                <img src="<?= base_url('assets_posyandu/img/profile/' . $profile['foto']) ?>" alt="user-image" class="rounded-circle">
                 <span class="pro-user-name ml-1">
                     <?= $profile['nama']; ?>
                 </span>
@@ -14,7 +13,7 @@
 
     <ul class="list-unstyled menu-left mb-0">
         <li class="float-left">
-            <a href="index.html" class="logo">
+            <a href="<?= base_url(); ?>" class="logo">
                 <span class="logo-lg">
                     <img src="<?php echo base_url() . 'assets' ?>/images/logo-posyandu.png" alt="" height="50">
                 </span>

@@ -24,8 +24,8 @@
                             <div class="col-12">
                                 <div class="card-box">
                                     <?= $this->session->flashdata('message'); ?>
-                                    <?php if (isset($jadwal)) : ?>
-                                        <h4 class="text-center"></h4>
+                                    <?php if (cek_jadwal_sekarang() > 0) : ?>
+                                        <h4 class="text-center">Antrian Posyandu hari ini</h4>
                                         <table id="datatable" class="table table-bordered dt-responsive nowrap">
                                             <thead>
                                                 <tr>
@@ -99,7 +99,7 @@
                                                                     </div>
                                                                     <div class="modal-body p-3">
                                                                         <h5>Tidak Hadir?</h5>
-                                                                        <?= form_open_multipart("insert/kehadiran"); ?>
+                                                                        <?= form_open_multipart("insert/tidak_hadir"); ?>
                                                                         <input type="hidden" class="form-control" name="kd_jadwal" value="<?= $jadwal['kd_jadwal'] ?>" readoly>
                                                                         <input type="hidden" class="form-control" name="kd_ortu" value="<?= $jadwal['kd_ortu'] ?>" readoly>
                                                                         <div class="mb-3">
@@ -128,6 +128,10 @@
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
+                                    <?php else : ?>
+                                        <div class="text-center">
+                                            <h3>Tidak Ada Jadwal Posyandu Hari ini</h3>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>

@@ -87,14 +87,14 @@ if (isset($_POST['pilih'])) {
                                     <li class="breadcrumb-item active">Starter</li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">Data PMT BAlita</h4>
+                            <h4 class="page-title">Data PMT Balita</h4>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card-box">
                                     <?= $this->session->flashdata('message'); ?>
-                                    <div class="row">
-                                        <div class="col-5 text center">
+                                    <div class="row mb-0">
+                                        <div class="col-6 text center">
                                             <form method="POST">
                                                 <div class="form-group">
                                                     <label class="control-label">Nama Orang Tua</label>
@@ -107,7 +107,7 @@ if (isset($_POST['pilih'])) {
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label">Pilih tanggal Jadwal</label>
+                                                    <label class="control-label">Pilih Jadwal</label>
                                                     <select class="custom-select" id="inputGroupSelect01" name="tanggal_jadwal">
                                                         <option selected><?= $tanggal_jadwal; ?></option>
                                                         <?php $jadwal = $this->db->get("jadwal")->result_array(); ?>
@@ -119,8 +119,7 @@ if (isset($_POST['pilih'])) {
                                                 <button type="submit" name="pilih" value="bayar" class="btn btn-success waves-effect waves-light width-xm mb-3" data-toggle="modal" data-target="#bayar_pmt">Bayar PMT</button>
                                             </form>
                                         </div>
-                                        <div class="col-2"></div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <form method="POST">
                                                 <div class="form-group">
                                                     <label class="control-label">Pilih Status</label>
@@ -132,7 +131,7 @@ if (isset($_POST['pilih'])) {
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label">Pilih tanggal Jadwal</label>
+                                                    <label class="control-label">Pilih Jadwal</label>
                                                     <select class="custom-select" id="inputGroupSelect01" name="tanggal">
                                                         <option selected><?= $tanggal; ?></option>
                                                         <?php $jadwal = $this->db->get("jadwal")->result_array(); ?>
@@ -147,6 +146,12 @@ if (isset($_POST['pilih'])) {
                                             </form>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-4"></div>
+                                        <div class="col-4 text-center"><button type="buton" class="btn btn-primary waves-effect waves-light width-xm">CEK KAS PMT</button></div>
+                                        <div class="col-4"></div>
+                                    </div>
+                                    <hr>
                                     <?php if ($menu === 'menunggu' or $menu === 'lunas') : ?>
                                         <h4 class="text-center"><?= $judul; ?></h4>
                                         <table id="datatable" class="table table-bordered dt-responsive nowrap">

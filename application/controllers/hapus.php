@@ -5,15 +5,25 @@ class Hapus extends CI_Controller
 {
 	public function ortu()
 	{
+		$role = $this->session->userdata('role');
 		$this->db->delete('orang_tua', ['kd_ortu' => $_POST['kd_ortu']]);
 		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berhasil Menghapus Data Orang Tua!</div>');
-		redirect('admin/orang_tua');
+		if (strtolower($role) == 'anggota') {
+			redirect('anggota/orang_tua');
+		} else {
+			redirect('admin/orang_tua');
+		}
 	}
 	public function balita()
 	{
+		$role = $this->session->userdata('role');
 		$this->db->delete('balita', ['kd_balita' => $_POST['kd_balita']]);
 		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berhasil Menghapus Data Balita!</div>');
-		redirect('admin/balita');
+		if (strtolower($role) == 'anggota') {
+			redirect('anggota/balita');
+		} else {
+			redirect('admin/balita');
+		}
 	}
 	public function bidan()
 	{
@@ -30,7 +40,7 @@ class Hapus extends CI_Controller
 	public function kegiatan()
 	{
 		$this->db->delete('kegiatan', ['kd_kegiatan' => $this->input->post('kd_kegiatan')]);
-		unlink(FCPATH . 'assets_tinta/img/kegiatan/' . $this->input->post('foto_kegiatan'));
+		unlink(FCPATH . 'assets_posyandu/img/kegiatan/' . $this->input->post('foto_kegiatan'));
 		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berhasil Menghapus Data Kegiatan!</div>');
 		redirect('admin/kegiatan');
 	}

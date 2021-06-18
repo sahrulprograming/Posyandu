@@ -27,7 +27,7 @@
     <div class="account-pages w-100 mt-5 mb-5">
         <div class="container">
             <div class="home-btn d-none d-sm-block">
-                <a href="<?= base_url('welcome'); ?>"><i class="fas fa-home h2 text-white"></i></a>
+                <a href="<?= base_url(); ?>"><i class="fas fa-home h2 text-white"></i></a>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6 col-xl-5">

@@ -15,7 +15,7 @@
                 <div class="row justify-content-center ">
                     <div class="col-lg-5">
                         <div class="title text-center mb-3">
-                            <h3>Kegiatan Posyandu Mawar 20</h3>
+                            <h3>Kegiatan Posyandu</h3>
                         </div>
                         <?= $this->session->flashdata('message'); ?>
                     </div>
@@ -37,11 +37,9 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="input-group mb-3">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01" name="gambar">
-                                        <label class="custom-file-label" for="inputGroupFile01">Pilih Gambar</label>
-                                    </div>
+                                <div class="form-group mb-3">
+                                    <label for="formFileMultiple" class="form-label">Pilih Foto Kegiatan</label>
+                                    <input class="form-control" type="file" id="formFileMultiple" name="gambar" multiple>
                                 </div>
                                 <div class="mb-3">
                                     <label for="judul" class="form-label">Judul Kegiatan</label>
@@ -69,7 +67,7 @@
                                 <a href="#" class="text-dark">
                                     <div class="position-relative demo-content">
                                         <div class="demo-img">
-                                            <img src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
+                                            <img src="<?= base_url('assets_posyandu') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
                                         </div>
                                         <div class="demo-overlay">
                                             <div class="overlay-icon">
@@ -112,7 +110,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="demo-img img-thumbnail">
-                                            <img src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
+                                            <img src="<?= base_url('assets_posyandu') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
                                         </div>
                                         <h1 class="text-center"><?= $kegiatan['judul']; ?></h1>
                                         <div class="container mt-3 text-center">
@@ -145,7 +143,7 @@
                                             <input type="hidden" name="kd_kegiatan" value="<?= $kegiatan['kd_kegiatan']; ?>">
                                         </div>
                                         <div class="card rounded mx-auto d-block" style="width: 18rem;">
-                                            <img class="card-img-top" src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="Card image cap">
+                                            <img class="card-img-top" src="<?= base_url('assets_posyandu') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="Card image cap">
                                         </div>
                                         <div class="mb-3">
                                             <label for="formFileMultiple" class="form-label">Ubah Foto Kegiatan</label>

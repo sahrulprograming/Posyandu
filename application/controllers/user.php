@@ -14,21 +14,6 @@ class User extends CI_Controller
         $this->load->view('template/rightbar', $data);
         $this->load->view('template/footer');
     }
-    public function kegiatanposyandu($value = '')
-    {
-        $data['title'] = 'Home | Posyandu';
-        $data['orang_tua'] = $this->orang_tua;
-        $this->load->view('template/header', $data);
-        $this->load->view('template/topbar', $data);
-        $this->load->view('template/sidebar', $data);
-        $this->load->view('user/akun/kegiatan');
-        $this->load->view('template/rightbar', $data);
-        $this->load->view('template/footer');
-    }
-    public function kaderposyandu($value = '')
-    {
-        $this->load->view('user/kader');
-    }
     public function non_aktif()
     {
         $this->load->view('user/non_aktif');
@@ -36,8 +21,12 @@ class User extends CI_Controller
 }
 
 
-    // public function home($value = '')
-    // {
+// public function kaderposyandu($value = '')
+// {
+//     $this->load->view('user/kader');
+// }
+// public function home($value = '')
+// {
     //     $this->load->view('user/home');
     // }
     // public function VisiMisiPosyandu($value = '')

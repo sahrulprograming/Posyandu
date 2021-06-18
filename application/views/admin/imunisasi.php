@@ -18,7 +18,7 @@
                                     <li class="breadcrumb-item active">Starter</li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">Data imunisasian</h4>
+                            <h4 class="page-title">Data imunisasi</h4>
                         </div>
                         <div class="row">
                             <div class="col-12">

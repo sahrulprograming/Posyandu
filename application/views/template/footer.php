@@ -10,6 +10,17 @@
 </footer>
 <!-- end Footer -->
 
+<!-- Animasi Saat di Scroll -->
+<script src="<?= base_url('assets_posyandu/js/aos.js'); ?>"></script>
+<script>
+    AOS.init({
+        // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+        offset: 120, // offset (in px) from the original trigger point
+        duration: 1500, // values from 0 to 3000, with step 50ms
+
+    });
+</script>
+
 <!-- App js -->
 <script src="<?php echo base_url() . 'assets' ?>/js/app.min.js"></script>
 

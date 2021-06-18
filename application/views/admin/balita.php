@@ -300,7 +300,7 @@
                                                         <?php
                                                         $orang_tua = $this->db->query("SELECT nama FROM orang_tua")->result_array();
                                                         ?>
-                                                        <select class="custom-select" id="inputGroupSelect01" name="nama_bidan">
+                                                        <select class="custom-select" id="inputGroupSelect01" name="nama_ortu">
                                                             <option selected>Pilih</option>
                                                             <?php foreach ($orang_tua as $orang_tua) : ?>
                                                                 <option value="<?= $orang_tua['nama']; ?>"><?= $orang_tua['nama']; ?></option>

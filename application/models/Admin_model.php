@@ -6,12 +6,17 @@ class Admin_model extends CI_Model
 {
     public function data_admin()
     {
-        $data_admin = $this->db->get_where('admin', ['kd_admin' => $this->session->userdata('kd_admin')])->row_array();
-        return $data_admin;
+        $role = $this->session->userdata('role');
+        if (strtolower($role) == 'admin') {
+            $data_login = $this->db->get_where('admin', ['kd_admin' => $this->session->userdata('kd_admin')])->row_array();
+        } else {
+            $data_login = $this->db->get_where('bidan', ['kd_bidan' => $this->session->userdata('kd_bidan')])->row_array();
+        }
+        return $data_login;
     }
     public function jadwal_hari_ini()
     {
-        $sql = "SELECT * FROM `antrian` JOIN jadwal ON `antrian`.`kd_jadwal` = `jadwal`.`kd_jadwal` WHERE NOT `antrian`.`kd_ortu` = ANY (SELECT kd_ortu FROM kehadiran WHERE kd_jadwal = ANY (SELECT kd_jadwal FROM jadwal WHERE tanggal = CURDATE()))";
+        $sql = "SELECT * FROM `antrian` JOIN jadwal ON `antrian`.`kd_jadwal` = `jadwal`.`kd_jadwal` WHERE NOT `antrian`.`kd_ortu` = ANY (SELECT kd_ortu FROM kehadiran WHERE kd_jadwal = ANY (SELECT kd_jadwal FROM jadwal WHERE tanggal = CURDATE())) AND `jadwal`.`tanggal` = CURDATE()";
         $result = $this->db->query($sql)->result_array();
         return $result;
     }
@@ -172,5 +177,56 @@ class Admin_model extends CI_Model
         $this->db->join('balita', 'imunisasi.kd_balita = balita.kd_balita', 'left');
         $imunisasi_balita = $this->db->get()->result_array();
         return $imunisasi_balita;
+    }
+    public function laporan_posyandu($status, $tanggal)
+    {
+        if ($tanggal == "") {
+            $data = $this->db->query("SELECT * FROM jadwal ORDER BY kd_jadwal DESC LIMIT 1")->row_array();
+            if ($data) {
+                $tanggal = tanggal_helper($data['tanggal']);
+            } else {
+                $tanggal = '00-00-0000';
+            }
+        }
+        $tanggal = tanggal_helper($tanggal);
+
+        $this->db->select('kehadiran.kd_kehadiran,
+                            kehadiran.kd_jadwal,
+                            kehadiran.kd_ortu, 
+                            jadwal.tanggal,
+                            kehadiran.status,
+                            kehadiran.keterangan as keterangan_kehadiran,
+                            jadwal.jam_mulai,
+                            jadwal.jam_selesai,
+                            jadwal.tempat,
+                            jadwal.keterangan as keterangan_jadwal ');
+        $this->db->from('kehadiran');
+        $this->db->join('jadwal', 'kehadiran.kd_jadwal = jadwal.kd_jadwal');
+        $this->db->where('status', $status);
+        $this->db->where('jadwal.tanggal', $tanggal);
+        $result = $this->db->get()->result_array();
+        return $result;
+    }
+    public function absen_tanpa_keterangan($tanggal)
+    {
+        if ($tanggal == "") {
+            $jadwal = $this->db->query("SELECT * FROM jadwal ORDER BY kd_jadwal DESC LIMIT 1")->row_array();
+            if ($jadwal) {
+                $kd_jadwal = $jadwal['kd_jadwal'];
+            } else {
+                $kd_jadwal = 0;
+            }
+        } else {
+            $tanggal = tanggal_helper($tanggal);
+            $jadwal = $this->db->query("SELECT * FROM jadwal WHERE tanggal = '$tanggal' ORDER BY kd_jadwal DESC LIMIT 1")->row_array();
+            if ($jadwal) {
+                $kd_jadwal = $jadwal['kd_jadwal'];
+            } else {
+                $kd_jadwal = 0;
+            }
+        }
+        $result = $this->db->query("SELECT nama,kd_ortu FROM `orang_tua`
+                                WHERE NOT kd_ortu = ANY (SELECT kd_ortu FROM kehadiran WHERE kd_jadwal = $kd_jadwal)")->result_array();
+        return [$result, $jadwal];
     }
 }

@@ -15,18 +15,18 @@
                 <div class="row justify-content-center ">
                     <div class="col-lg-5">
                         <div class="title text-center mb-3">
-                            <h3>Kegiatan Posyandu Mawar 20</h3>
+                            <h3>Kegiatan Posyandu</h3>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <?php foreach ($kegiatan as $kegiatan) : ?>
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-4 col-md-6" data-aos="flip-right" data-aos-easing="ease-out-cubic" data-aos-duration="1500">
                             <div class="demo-box text-center card p-2">
                                 <a href="#" class="text-dark">
                                     <div class="position-relative demo-content">
                                         <div class="demo-img">
-                                            <img src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
+                                            <img src="<?= base_url('assets_posyandu') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
                                         </div>
                                         <div class="demo-overlay">
                                             <div class="overlay-icon">
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="demo-img img-thumbnail">
-                                            <img src="<?= base_url('assets_tinta') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
+                                            <img src="<?= base_url('assets_posyandu') ?>/img/kegiatan/<?= $kegiatan['foto_kegiatan']; ?>" alt="" class="img-fluid mx-auto d-block rounded">
                                         </div>
                                         <h1 class="text-center"><?= $kegiatan['judul']; ?></h1>
                                         <div class="container mt-3">

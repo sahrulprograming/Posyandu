@@ -28,6 +28,14 @@ function cek_penimbangan($kd_balita)
 {
     $ci = get_instance();
     $data_balita = $ci->db->query("SELECT * from penimbangan where kd_balita = $kd_balita ORDER BY kd_penimbang DESC LIMIT 1")->row_array();
+    if (!$data_balita) {
+        $data_balita = [
+            'bb' => "belum di timbang",
+            'tb' => "belum di ukur",
+            'keluhan' => "belum konsultasi",
+            'tanggal' => "belum datang",
+        ];
+    }
     return $data_balita;
 }
 function antrian($kd_jadwal)
@@ -50,7 +58,7 @@ function get_kd_ortu($nama_ortu)
     $ci->db->from('orang_tua');
     $ci->db->where('nama', $nama_ortu);
     $data = $ci->db->get()->row_array();
-    return $data;
+    return $data['kd_ortu'];
 }
 function nominal_kas($tanggal_jadwal)
 {
@@ -80,4 +88,10 @@ function jam_helper($jam)
     $arr = explode(':', $jam);
     $jam = $arr[0] . ':' . $arr[1] . " WIB";
     return $jam;
+}
+function cek_jadwal_sekarang()
+{
+    $ci = get_instance();
+    $jadwal = $ci->db->get_where('jadwal', ['tanggal' => date("Y-m-d")])->num_rows();
+    return $jadwal;
 }

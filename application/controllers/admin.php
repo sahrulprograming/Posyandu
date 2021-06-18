@@ -151,7 +151,6 @@ class Admin extends CI_Controller
 	{
 
 		$this->form_validation->set_rules('judul', 'Judul', 'required');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 		if ($this->form_validation->run() == false) {
 			$data['title'] = 'Kegiatan | Posyandu';
 			$data['profile'] = $this->data_admin;
@@ -167,7 +166,7 @@ class Admin extends CI_Controller
 			if ($gambar) {
 				$config['allowed_types'] = 'gif|jpg|png';
 				$config['max_size']     = '2048';
-				$config['upload_path'] = './assets_tinta/img/kegiatan/';
+				$config['upload_path'] = './assets_posyandu/img/kegiatan/';
 
 				$this->load->library('upload', $config);
 
@@ -201,10 +200,6 @@ class Admin extends CI_Controller
 	{
 		$data['title'] = 'Data PMT | Posyandu';
 		$data['profile'] = $this->data_admin;
-		$data['data_kas_pmt'] = $this->admin_model->data_kas_pmt();
-		$data['pmt_menunggu'] = $this->admin_model->data_pmt_menunggu();
-		$data['pmt_lunas'] = $this->admin_model->data_pmt_lunas();
-		$data['pmt_belum_bayar'] = $this->admin_model->data_pmt_belum_bayar();
 		$this->load->view('template/header', $data);
 		$this->load->view('template/topbar', $data);
 		$this->load->view('admin/sidebar', $data);

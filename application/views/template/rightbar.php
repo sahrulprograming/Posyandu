@@ -21,7 +21,7 @@ if (strtolower($role) == 'admin') {
         <!-- User box -->
         <div class="user-box">
             <div class="user-img">
-                <img src="<?= base_url('assets_tinta') ?>/img/profile/default-P.jpg" alt="user-img" title="Mat Helme" class="rounded-circle img-fluid">
+                <img src="<?= base_url('assets_posyandu/img/profile/' . $profile['foto']) ?>" alt="user-img" title="Mat Helme" class="rounded-circle img-fluid">
                 <a href="javascript: void(0);" data-toggle="modal" data-target="#edit_profile" class="user-edit"><i class="mdi mdi-pencil"></i></a>
             </div>
 
@@ -71,7 +71,7 @@ if (strtolower($role) == 'admin') {
                 <input type="hidden" name="kd_profile" value="<?= $kd_profile; ?>">
                 <div class="modal-body">
                     <div class="card rounded mx-auto d-block" style="width: 5rem;">
-                        <img class="card-img-top" src="<?= base_url('assets_tinta') ?>/img/profile/<?= $profile['foto']; ?>" alt="Card image cap">
+                        <img class="card-img-top" src="<?= base_url('assets_posyandu/img/profile/' . $profile['foto']) ?>" alt="Card image cap">
                     </div>
                     <div class="mb-3">
                         <label for="formFileMultiple" class="form-label">Ubah Foto Profile </label>

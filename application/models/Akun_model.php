@@ -8,26 +8,34 @@ class Akun_model extends CI_Model
 {
     public function data_user()
     {
-        $balita = $this->db->get_where('balita', ['kd_ortu' => $this->session->userdata('kd_ortu')])->result_array();
-        $orang_tua = $this->db->get_where('orang_tua', ['kd_ortu' => $this->session->userdata('kd_ortu')])->row_array();
-        return array($balita, $orang_tua);
+        $role = $this->session->userdata('role');
+        if (strtolower($role) == 'anggota') {
+            $data_login = $this->db->get_where('anggota', ['kd_anggota' => $this->session->userdata('kd_anggota')])->row_array();
+        } else {
+            $data_login = $this->db->get_where('orang_tua', ['kd_ortu' => $this->session->userdata('kd_ortu')])->row_array();
+        }
+        return $data_login;
+    }
+    public function profile_balita()
+    {
+        $this->db->select('`balita`.`nama` AS `nama_balita`,
+        `orang_tua`.`nama` AS `nama_orang_tua`,
+        `bidan`.`nama` AS `nama_bidan`,
+        `balita`.`nik`,
+        `balita`.`tgl_lahir`,
+        `balita`.`jenis_kelamin`,
+        `balita`.`kd_balita`');
+        $this->db->from('balita');
+        $this->db->join('orang_tua', 'balita.kd_ortu = orang_tua.kd_ortu', 'left');
+        $this->db->join('bidan', 'balita.kd_bidan = bidan.kd_bidan', 'left');
+        $this->db->where('balita.kd_ortu', $this->session->userdata('kd_ortu'));
+        $profile_balita = $this->db->get()->result_array();
+        return $profile_balita;
     }
     public function cek_bidan($kd_bidan)
     {
         $bidan = $this->db->get_where('bidan', ['kd_bidan' => $kd_bidan])->row_array();
         return $bidan;
-    }
-    public function update_balita()
-    {
-        $nik = $this->input->post('nik');
-        $data = [
-            'nama' => $this->input->post('nama'),
-            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-            'tgl_lahir' => $this->input->post('tgl_lahir')
-        ];
-        $this->db->set($data);
-        $this->db->where('nik', $nik);
-        $this->db->update('balita');
     }
     public function jumlah_balita()
     {

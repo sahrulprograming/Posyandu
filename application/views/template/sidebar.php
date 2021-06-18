@@ -33,7 +33,7 @@
                         <a href="<?= base_url('akun/Kegiatanposyandu'); ?>">Kegiatan Posyandu</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('user/Kaderposyandu'); ?>">Kader-Kader Posyandu</a>
+                        <a href="<?= base_url('akun/kader_posyandu'); ?>">Kader-Kader Posyandu</a>
                     </li>
                 </ul>
             </li>

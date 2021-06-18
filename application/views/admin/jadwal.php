@@ -30,11 +30,11 @@
                                     <table id="datatable" class="table table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th width="15%">Tanggal</th>
+                                                <th width="10%">Tanggal</th>
                                                 <th width="15%">Tempat</th>
                                                 <th width="10%">Jam Mulai</th>
                                                 <th width="10%">Jam Selesai</th>
-                                                <th width="20%">Keterangan</th>
+                                                <th width="15%">Keterangan</th>
                                                 <th width="30%">Aksi</th>
                                             </tr>
                                         </thead>

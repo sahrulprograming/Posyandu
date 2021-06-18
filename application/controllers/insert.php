@@ -15,8 +15,9 @@ class Insert extends CI_Controller
 			'nik' => $_POST['nik'],
 			'nama' => $_POST['nama'],
 			'alamat' => $_POST['alamat'],
-			'email' => $_POST['email'],
 			'no_tlpn' => $_POST['no_tlpn'],
+			'foto' => 'default-P.jpg',
+			'email' => $_POST['email'],
 			'password' => password_hash('mawar20', PASSWORD_DEFAULT)
 		];
 		$this->db->insert('bidan', $data);
@@ -30,15 +31,17 @@ class Insert extends CI_Controller
 	}
 	public function ortu()
 	{
+		$role = $this->session->userdata('role');
 		$data = [
 			'no_kk' => $_POST['no_kk'],
 			'nik' => $_POST['nik'],
 			'nama' => $_POST['nama'],
 			'alamat' => $_POST['alamat'],
 			'no_tlpn' => $_POST['no_tlpn'],
-			'status' => 'aktif',
+			'foto' => 'default-P.jpg',
 			'email' => $_POST['email'],
-			'password' => password_hash('mawar20', PASSWORD_DEFAULT)
+			'password' => password_hash('mawar20', PASSWORD_DEFAULT),
+			'status' => 'aktif'
 		];
 		$this->db->insert('orang_tua', $data);
 		$result = $this->db->affected_rows();
@@ -47,21 +50,26 @@ class Insert extends CI_Controller
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal menambah Data Orang Tua!</div>');
 		}
-		redirect('admin/orang_tua');
+		if (strtolower($role) == 'anggota') {
+			redirect('anggota/orang_tua');
+		} else {
+			redirect('admin/orang_tua');
+		}
 	}
 	public function balita()
 	{
-		// $arr = explode('-', $_POST['tgl_lahir']);
-		// $tgl_lahir = $arr[2] . '-' . $arr[1] . '-' . $arr[0];
+		$role = $this->session->userdata('role');
 		$result = $this->db->get_where('bidan', ['nama' => $_POST['nama_bidan']])->row_array();
 		$kd_bidan = $result['kd_bidan'];
+		$kd_ortu = get_kd_ortu($this->input->post('nama_ortu'));
 		$data = [
 			'nik' => $_POST['nik'],
 			'nama' => $_POST['nama'],
 			'jenis_kelamin' => $_POST['jenis_kelamin'],
 			'nik' => $_POST['nik'],
 			'tgl_lahir' => $_POST['tgl_lahir'],
-			'kd_bidan' => $kd_bidan
+			'kd_bidan' => $kd_bidan,
+			'kd_ortu' => $kd_ortu,
 		];
 		$this->db->insert('balita', $data);
 		$result = $this->db->affected_rows();
@@ -70,7 +78,11 @@ class Insert extends CI_Controller
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal menambah Data Balita!</div>');
 		}
-		redirect('admin/balita');
+		if (strtolower($role) == 'anggota') {
+			redirect('anggota/balita');
+		} else {
+			redirect('admin/balita');
+		}
 	}
 	public function jadwal()
 	{
@@ -111,7 +123,7 @@ class Insert extends CI_Controller
 		$this->db->insert('status_pmt', $data);
 		$result = $this->db->affected_rows();
 		if ($result > 0) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pembayaran Menunggu Konfirmasi Admin!</div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pembayaran Menunggu Konfirmasi Silahkan sentuh Hubungi Admin!</div>');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Bayar!</div>');
 		}
@@ -119,33 +131,43 @@ class Insert extends CI_Controller
 	}
 	public function antrian()
 	{
-		$kd_ortu = $this->session->userdata('kd_ortu');
-		$sudah_antri = $this->db->get_where('antrian', ['kd_jadwal' => $_POST['kd_jadwal'], 'kd_ortu' => $kd_ortu])->row_array();
-		if ($sudah_antri) {
-			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda Sudah Antri</div>');
+		$jadwal = $this->db->get_where('jadwal', ['kd_jadwal' => $_POST['kd_jadwal']])->row_array();
+		if ($jadwal['tanggal'] == date('Y-m-d') and $jadwal['jam_mulai'] >= date("h:i:s") or $jadwal['jam_selesai'] <= date("h:i:s")) {
+			$kd_ortu = $this->session->userdata('kd_ortu');
+			$sudah_antri = $this->db->get_where('antrian', ['kd_jadwal' => $_POST['kd_jadwal'], 'kd_ortu' => $kd_ortu])->row_array();
+			if ($sudah_antri) {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda Sudah Antri</div>');
+				redirect('akun/jadwal_posyandu');
+				exit;
+			}
+			$kd_jadwal = $_POST['kd_jadwal'];
+			$antrian = $this->db->query("SELECT no_antrian FROM antrian WHERE kd_jadwal = $kd_jadwal ORDER BY no_antrian DESC LIMIT 1")->row_array();
+			$antrian_baru = $antrian['no_antrian'] + 1;
+			if (!$antrian) {
+				$antrian_baru = 1;
+			}
+			$data = [
+				'no_antrian' => $antrian_baru,
+				'kd_ortu' => $kd_ortu,
+				'kd_jadwal' => $_POST['kd_jadwal']
+			];
+			$this->db->insert('antrian', $data);
+			$result = $this->db->affected_rows();
+			if ($result > 0) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil membuat no antrian!</div>');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal antri!</div>');
+			}
 			redirect('akun/jadwal_posyandu');
-			exit;
-		}
-		$kd_jadwal = $_POST['kd_jadwal'];
-		$antrian = $this->db->query("SELECT no_antrian FROM antrian WHERE kd_jadwal = $kd_jadwal ORDER BY no_antrian DESC LIMIT 1")->row_array();
-		$antrian_baru = $antrian['no_antrian'] + 1;
-		if (!$antrian) {
-			$antrian_baru = 1;
-		}
-		$data = [
-			'no_antrian' => $antrian_baru,
-			'kd_ortu' => $kd_ortu,
-			'kd_jadwal' => $_POST['kd_jadwal']
-		];
-		$this->db->insert('antrian', $data);
-		$result = $this->db->affected_rows();
-		if ($result > 0) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil membuat no antrian!</div>');
+		} elseif ($jadwal['tanggal'] < date('Y-m-d')) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Sudah Lewat!</div>');
+			redirect('akun/jadwal_posyandu');
 		} else {
-			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal antri!</div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Belum Mulai!</div>');
+			redirect('akun/jadwal_posyandu');
 		}
-		redirect('akun/jadwal_posyandu');
 	}
+
 	public function anggota()
 	{
 		$data = [
@@ -255,6 +277,23 @@ class Insert extends CI_Controller
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Input Hadir!</div>');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Gagal Input Hadir!</div>');
+		}
+		redirect('admin');
+	}
+	public function tidak_hadir()
+	{
+		$data = [
+			'kd_jadwal' => $this->input->post('kd_jadwal'),
+			'kd_ortu' => $this->input->post('kd_ortu'),
+			'keterangan' => $this->input->post('keterangan'),
+			'status' => "tidak hadir"
+		];
+		$this->db->insert('kehadiran', $data);
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Input Tidak Hadir!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Gagal Input Tidak Hadir!</div>');
 		}
 		redirect('admin');
 	}

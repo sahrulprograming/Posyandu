@@ -13,7 +13,7 @@ class Auth extends CI_Controller
     {
         if ($this->session->userdata('role') == 'Admin' or $this->session->userdata('role') == 'Bidan') {
             redirect('admin');
-        } else if ($this->session->userdata('role') == 'User') {
+        } else if ($this->session->userdata('role') == 'User' or $this->session->userdata('role') == 'anggota') {
             redirect('akun');
         }
         $this->form_validation->set_rules('email', 'Email', 'required|trim', [
@@ -40,9 +40,10 @@ class Auth extends CI_Controller
         $orang_tua = $data[0];
         $admin = $data[1];
         $bidan = $data[2];
+        $anggota = $data[3];
 
         // Jika ada maka menjalankan Fungsi if ini
-        if ($orang_tua or $admin or $bidan) {
+        if ($orang_tua or $admin or $bidan or $anggota) {
             // cek pasword Sesuai yang Login 
             if (password_verify($password, $orang_tua['password'])) {
                 if ($orang_tua['status'] == 'aktif') {
@@ -72,10 +73,18 @@ class Auth extends CI_Controller
                 $data = [
                     'kd_bidan' => $bidan['kd_bidan'],
                     'role'  => 'Bidan',
-                    'id_menu' => 3
+                    'id_menu' => 1
                 ];
                 $this->session->set_userdata($data);
                 redirect('admin');
+            } elseif (password_verify($password, $anggota['password'])) {
+                $data = [
+                    'kd_anggota' => $anggota['kd_anggota'],
+                    'role'  => 'anggota',
+                    'id_menu' => 3
+                ];
+                $this->session->set_userdata($data);
+                redirect('akun');
             }
             // Else Jika Password Salah
             else {
@@ -181,6 +190,6 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('id_menu');
         $this->session->sess_destroy();
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Logout</div>');
-        redirect('auth/login');
+        redirect('home');
     }
 }
