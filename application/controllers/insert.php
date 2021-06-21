@@ -113,7 +113,7 @@ class Insert extends CI_Controller
 		if ($sudah_bayar) {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda Sudah Bayar Menunggu Konfirmasi Admin!</div>');
 			redirect('akun/jadwal_posyandu');
-		}else{
+		} else {
 			$jumlah_balita = $this->db->get_where('balita', ['kd_ortu' => $_POST['kd_ortu']])->num_rows();
 			$data = [
 				'status_bayar' => $_POST['status'],
@@ -251,9 +251,10 @@ class Insert extends CI_Controller
 					$status_pmt = $this->db->get_where('status_pmt', ['kd_jadwal' => $this->input->post('kd_jadwal'), 'kd_ortu' => $this->input->post('kd_ortu')])->row_array();
 					$kas_pmt = [
 						'kd_pmt' => $status_pmt['kd_pmt'],
-						'nominal_masuk' => $this->input->post('nominal')
+						'nominal_masuk' => $this->input->post('nominal'),
+						'nominal_keluar' => 0
 					];
-					$this->db->insert('kas_pmt', $kas_pmt);
+					$result = $this->db->insert('kas_pmt', $kas_pmt);
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Bayar PMT!</div>');
 				} else {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Bayar PMT!</div>');
@@ -305,22 +306,24 @@ class Insert extends CI_Controller
 		}
 		redirect('admin');
 	}
-	public function kas_keluar(){
+	public function kas_keluar()
+	{
 		$kas = $this->input->post('total_kas');
 		$kas_keluar = $this->input->post('nominal_keluar');
-		if ($kas >= $kas_keluar){
+		if ($kas >= $kas_keluar) {
 			$data = [
+				'nominal_keluar' => 0,
 				'nominal_keluar' => $kas_keluar,
 				'keterangan' => $this->input->post('keterangan')
 			];
 			$this->db->insert('kas_pmt', $data);
 			$result = $this->db->affected_rows();
-			if ($result > 0){
+			if ($result > 0) {
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Input data kas keluar!</div>');
-			}else{
+			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Input kas keluar!</div>');
 			}
-		}else{
+		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Uang Kas Kurang!</div>');
 		}
 		redirect('admin/kas_pmt');

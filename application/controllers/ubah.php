@@ -315,7 +315,8 @@ class Ubah extends CI_Controller
 			$pmt = $this->db->get_where('status_pmt', ['kd_pmt' => $this->input->post('kd_pmt')])->row_array();
 			$kas_pmt = [
 				'kd_pmt' => $pmt['kd_pmt'],
-				'nominal_masuk' => $pmt['kas_PMT'] * $pmt['jml_balita']
+				'nominal_masuk' => $pmt['kas_PMT'] * $pmt['jml_balita'],
+				'nominal_keluar' => 0
 			];
 			$this->db->insert('kas_pmt', $kas_pmt);
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pembayaran Berhasil Dikonfirmasi!</div>');

@@ -229,7 +229,8 @@ class Admin_model extends CI_Model
                                 WHERE NOT kd_ortu = ANY (SELECT kd_ortu FROM kehadiran WHERE kd_jadwal = $kd_jadwal)")->result_array();
         return [$result, $jadwal];
     }
-    public function data_kas(){
+    public function data_kas()
+    {
         $this->db->select("SUM(nominal_masuk) - SUM(nominal_keluar) AS `total`");
         $this->db->from('kas_pmt');
         $kas = $this->db->get()->row_array();
