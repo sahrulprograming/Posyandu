@@ -63,7 +63,7 @@
                                                     if ($status['status_bayar'] == "menunggu") :
                                                     ?>
                                                         <button type="submit" class="btn btn-primary btn-rounded" name="menunggu"><?= $status['status_bayar']; ?></button>
-                                                        <p class="mt-2"><a href="https://api.whatsapp.com/send?phone=6282126079104&text=Admin Saya ingin bayar PMT atas nama <?= $profile['nama']; ?>" class="tooltip-test" title="To Whatsapp">Hubungi Admin</a></p>
+                                                        <p class="mt-2"><a href="https://api.whatsapp.com/send?phone=<?= nohp_admin(); ?>&text=Admin Saya ingin bayar PMT atas nama <?= $profile['nama']; ?>" class="tooltip-test" title="To Whatsapp">Hubungi Admin</a></p>
                                                     <?php elseif ($status['status_bayar'] == 'lunas') : ?>
                                                         <button type="submit" class="btn btn-success btn-rounded" name="lunas"><?= $status['status_bayar']; ?></button>
                                                     <?php else : ?>
@@ -72,7 +72,7 @@
                                                             <input type="hidden" name="kd_jadwal" value="<?= $jadwal['kd_jadwal']; ?>">
                                                             <input type="hidden" name="kd_ortu" value="<?= $this->session->userdata('kd_ortu'); ?>">
                                                             <input type="hidden" name="status" value="menunggu">
-                                                            <button href="https://api.whatsapp.com/send?phone=6282126079104&text=Admin Saya ingin bayar PMT atas nama <?= $profile['nama']; ?>" type="submit" class="btn btn-success btn-rounded" name="bayar">Bayar</button>
+                                                            <button type="submit" class="btn btn-success btn-rounded" name="bayar">Bayar</button>
                                                             </form>
                                                         </div>
                                                     <?php endif ?>

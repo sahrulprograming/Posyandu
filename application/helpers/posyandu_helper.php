@@ -97,3 +97,21 @@ function cek_jadwal_sekarang()
     $jadwal = $ci->db->get_where('jadwal', ['tanggal' => date("Y-m-d")])->num_rows();
     return $jadwal;
 }
+function format_nohp($nomer)
+{
+    if ($nomer[0] === "0") {
+        $nomer = substr($nomer, 1);
+        $nomer = substr_replace($nomer, "62", 0, 0);
+        return $nomer;
+    } else {
+        return $nomer;
+    }
+}
+
+function nohp_admin()
+{
+    $ci = get_instance();
+    $admin = $ci->db->query("SELECT no_tlpn FROM admin LIMIT 1")->row_array();
+    $nomer = $admin['no_tlpn'];
+    return format_nohp($nomer);
+}
