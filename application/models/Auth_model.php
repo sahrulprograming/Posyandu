@@ -15,7 +15,7 @@ class Auth_model extends CI_Model
         $admin = $this->db->query("SELECT * FROM `admin` WHERE email = '$email' OR nik = '$email'")->row_array();
         $bidan = $this->db->query("SELECT * FROM bidan WHERE email = '$email' OR nik = '$email'")->row_array();
         $anggota = $this->db->query("SELECT * FROM anggota WHERE email = '$email' OR nik = '$email'")->row_array();
-        return array($orang_tua, $admin, $bidan, $anggota);
+        return array($orang_tua, $admin, $bidan, $anggota );
     }
     public function tambah_user()
     {

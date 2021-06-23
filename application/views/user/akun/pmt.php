@@ -51,6 +51,27 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="">Kas PMT</label>
+                                        <input type="text" class="form-control" value="Rp. <?= number_format($pmt['kas_PMT']); ?>" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Jumlah Balita</label>
+                                        <input type="text" class="form-control" value="<?= $jumlah_balita; ?>" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Total PMT</label>
+                                        <input type="text" class="form-control" value="Rp. <?= number_format($pmt['kas_PMT'] * $jumlah_balita, 0, ",", "."); ?>" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Status</label>
+                                        <?php $status = $pmt['status_bayar'];
+                                        if ($status == 'menunggu') : ?>
+                                            <a href="#" class="btn-primary btn-sm text-white"><?= $pmt['status_bayar']; ?></a>
+                                        <?php else : ?>
+                                            <a href="#" class="btn-success btn-sm text-white"><?= $pmt['status_bayar']; ?></a>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
