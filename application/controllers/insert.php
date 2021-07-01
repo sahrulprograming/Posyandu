@@ -133,8 +133,9 @@ class Insert extends CI_Controller
 	}
 	public function antrian()
 	{
+		ini_set('date.timezone', 'Asia/Jakarta');
 		$jadwal = $this->db->get_where('jadwal', ['kd_jadwal' => $_POST['kd_jadwal']])->row_array();
-		if ($jadwal['tanggal'] == date('Y-m-d') and $jadwal['jam_mulai'] >= date("h:i:s") or $jadwal['jam_selesai'] <= date("h:i:s")) {
+		if ($jadwal['tanggal'] == date('Y-m-d') and date("h:i:s") >= $jadwal['jam_mulai'] and date("h:i:s") <= $jadwal['jam_selesai']) {
 			$kd_ortu = $this->session->userdata('kd_ortu');
 			$sudah_antri = $this->db->get_where('antrian', ['kd_jadwal' => $_POST['kd_jadwal'], 'kd_ortu' => $kd_ortu])->row_array();
 			if ($sudah_antri) {
