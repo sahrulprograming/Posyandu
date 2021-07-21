@@ -5,7 +5,7 @@
             <thead>
                 <tr>
                     <th width="20%">Nama Orang Tua</th>
-                    <th width="20%">Nominal</th>
+                    <th width="20%">Nominal Total</th>
                     <th width="20%">Jatuh Tempo</th>
                     <th width="20%">Tanggal Konfirmasi</th>
                     <th width="10%">Info</th>
@@ -25,7 +25,7 @@
                         }
                         ?>
                         <td><?= $pmt['nama']; ?></td>
-                        <td>Rp. <?= number_format($pmt['kas_PMT'] * $jumlah_balita, 0, ",", "."); ?></td>
+                        <td class="text-center">Rp. <?= to_rupiah($pmt['kas_PMT'] * jumlah_balita_pmt($pmt['kd_pmt'])); ?></td>
                         <td class="text-center"><?= $jatuh_tempo; ?></td>
                         <td class="text-center"><?= $konfirmasi; ?></td>
                         <td class="aksi">
@@ -51,17 +51,20 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="">Kas PMT</label>
-                                        <input type="text" class="form-control" value="Rp. <?= number_format($pmt['kas_PMT']); ?>" readonly>
+                                    <div class="row">
+                                        <div class="col-5"><label>KAS PMT</label></div>
+                                        <div class="col-1 text-right">:</div>
+                                        <div class="col-6"><label>Rp. <?= number_format($pmt['kas_PMT']); ?></label></div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="">Jumlah Balita</label>
-                                        <input type="text" class="form-control" value="<?= $jumlah_balita; ?>" readonly>
+                                    <div class="row">
+                                        <div class="col-5"><label>JUMLAH BALITA</label></div>
+                                        <div class="col-1 text-right">:</div>
+                                        <div class="col-6"><label><?= jumlah_balita_pmt($pmt['kd_pmt']); ?></label></div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="">Total PMT</label>
-                                        <input type="text" class="form-control" value="Rp. <?= number_format($pmt['kas_PMT'] * $jumlah_balita, 0, ",", "."); ?>" readonly>
+                                    <div class="row">
+                                        <div class="col-5"><label>TOTAL PMT</label></div>
+                                        <div class="col-1 text-right">:</div>
+                                        <div class="col-6"><label><?= to_rupiah($pmt['kas_PMT'] * jumlah_balita_pmt($pmt['kd_pmt'])); ?></label></div>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Status</label>

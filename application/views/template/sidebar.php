@@ -8,7 +8,7 @@
 
             <ul class="metismenu" id="side-menu">
 
-                <li class="menu-title">user</li>
+                <li class="menu-title"><?= $this->session->userdata('role'); ?></li>
 
                 <li>
                     <?php $menu = $this->db->get_where('sub_menu', ['id_menu' => $this->session->userdata('id_menu')])->result_array(); ?>

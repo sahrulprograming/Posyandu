@@ -66,71 +66,109 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body p-3">
-                                                                <?= form_open_multipart("admin/ubah_balita"); ?>
-                                                                <input class="form-control form-white" type="hidden" name="kd_balita" value="<?= $balita['kd_balita']; ?>" readonly>
-                                                                <!-- NIK -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Nik</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nik" type="number" name="nik" value="<?= $balita['nik']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>NIK</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $balita['nik']; ?></label>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- NAMA -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Nama</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" value="<?= $balita['nama_balita']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>NAMA</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $balita['nama_balita']; ?></label>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- Jenis Kelamin -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Jenis kelamin</label>
-                                                                    <input class="form-control form-white" placeholder="Jenis Kelamin" type="text" name="jenis_kelamin" value="<?= $balita['jenis_kelamin']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>JENIS KELAMIN</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $balita['jenis_kelamin']; ?></label>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- tanggal Lahir -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Tanggal Lahir</label>
-                                                                    <input class="form-control form-white" placeholder="masukan tlp" type="text" name="tgl_lahir" value="<?= $balita['tgl_lahir']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>TANGGAL LAHIR</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $balita['tgl_lahir']; ?></label>
+                                                                    </div>
                                                                 </div>
                                                                 <!-- Query ke database Cek Data penimbang kd_balita -->
                                                                 <?php
                                                                 $data_balita = cek_penimbangan($balita['kd_balita']);
-                                                                if (!$data_balita) {
-                                                                    $data_balita = [
-                                                                        'bb' => '',
-                                                                        'tb' => '',
-                                                                        'keluhan' => '',
-                                                                    ];
-                                                                }
                                                                 ?>
-                                                                <!-- Berat Badan -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Berat Badan</label>
-                                                                    <input class="form-control form-white" placeholder="bb" type="text" name="bb" value="<?= $data_balita['bb']; ?> Kg" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>BERAT BADAN</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $data_balita['bb']; ?></label>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- Tinggi Badan -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Tinggi Badan</label>
-                                                                    <input class="form-control form-white" placeholder="tb" type="text" name="tb" value="<?= $data_balita['tb']; ?> Cm" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>TINGGI BADAN</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $data_balita['tb']; ?></label>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- Keluhan -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Keluhan</label>
-                                                                    <textarea class="form-control form-white" placeholder="Keluhan" type="text" name="keluhan" readonly><?= $data_balita['keluhan']; ?></textarea>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>KELUHAN</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $data_balita['keluhan']; ?></label>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- Nama Ortu -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Nama orang tua</label>
-                                                                    <input class="form-control form-white" placeholder="nama_orang_tua" type="text" name="nama_orang_tua" value="<?= $balita['nama_orang_tua']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>NAMA ORANG TUA</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $balita['nama_orang_tua']; ?></label>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- Nama Bidan -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Nama Bidan Perawat</label>
-                                                                    <input class="form-control form-white" placeholder="nama_bidan" type="text" name="nama_bidan" value="<?= $balita['nama_bidan']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>NAMA BIDAN PERAWAT</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label><?= $balita['nama_bidan']; ?></label>
+                                                                    </div>
                                                                 </div>
-
-                                                                <div class="text-right">
-                                                                    <!-- Tombol Close -->
-                                                                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
-                                                                </div>
-
-                                                                </form>
                                                             </div>
                                                             <!-- Akhir modal body-->
                                                         </div>

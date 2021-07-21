@@ -46,14 +46,14 @@
                                                         <td class="text-center"><?= jam_helper($jadwal['jam_mulai']); ?></td>
                                                         <td class="text-center"><?= jam_helper($jadwal['jam_selesai']); ?></td>
                                                         <td class="text-center">
-                                                            <button type="button" class="btn btn-primary waves-effect waves-light width-xm" data-toggle="modal" data-target="#hadir<?= $jadwal['no_antrian']; ?>">Hadir</button>
-                                                            <button type="button" class="btn btn-danger waves-effect waves-light width-xm" data-toggle="modal" data-target="#tidak_hadir<?= $jadwal['no_antrian']; ?>">Tidak Hadir</button>
+                                                            <button type="button" class="btn btn-primary waves-effect waves-light width-xm" data-toggle="modal" data-target="#hadir<?= $jadwal['kd_kehadiran']; ?>">Hadir</button>
+                                                            <button type="button" class="btn btn-danger waves-effect waves-light width-xm" data-toggle="modal" data-target="#tidak_hadir<?= $jadwal['kd_kehadiran']; ?>">Tidak Hadir</button>
                                                         </td>
                                                     </tr>
 
                                                     <div nama="Pembungkus Modal Antrian">
                                                         <!-- Awal Konfirmasi Hadir -->
-                                                        <div class="modal fade" id="hadir<?= $jadwal['no_antrian']; ?>" tabindex="-1">
+                                                        <div class="modal fade" id="hadir<?= $jadwal['kd_kehadiran']; ?>" tabindex="-1">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header border-bottom-0">
@@ -64,10 +64,9 @@
                                                                     </div>
                                                                     <div class="modal-body p-3">
                                                                         <h5>Hadir?</h5>
-                                                                        <?= form_open_multipart("insert/kehadiran"); ?>
-                                                                        <input type="hidden" class="form-control" name="kd_jadwal" value="<?= $jadwal['kd_jadwal'] ?>" readoly>
-                                                                        <input type="hidden" class="form-control" name="kd_ortu" value="<?= $jadwal['kd_ortu'] ?>" readoly>
-                                                                        <input type="hidden" class="form-control" name="keterangan" value="" readoly>
+                                                                        <?= form_open_multipart("ubah/hadir"); ?>
+                                                                        <input type="hidden" class="form-control" name="kd_kehadiran" value="<?= $jadwal['kd_kehadiran'] ?>" readoly>
+                                                                        <input type="hidden" class="form-control" name="keterangan" value="Hadir" readoly>
                                                                         <div class="mb-3">
                                                                             <label for="nama" class="col-form-label">Nama Orang Tua:</label>
                                                                             <input type="text" class="form-control" id="nama" name="nama" value="<?= get_nama_ortu($jadwal['kd_ortu']); ?>" readoly>
@@ -88,7 +87,7 @@
                                                         <!-- Akhir Konfirmasi Hadir -->
 
                                                         <!-- Awal Konfirmasi Tidak Hadir -->
-                                                        <div class="modal fade" id="tidak_hadir<?= $jadwal['no_antrian']; ?>" tabindex="-1">
+                                                        <div class="modal fade" id="tidak_hadir<?= $jadwal['kd_kehadiran']; ?>" tabindex="-1">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header border-bottom-0">
@@ -99,9 +98,8 @@
                                                                     </div>
                                                                     <div class="modal-body p-3">
                                                                         <h5>Tidak Hadir?</h5>
-                                                                        <?= form_open_multipart("insert/tidak_hadir"); ?>
-                                                                        <input type="hidden" class="form-control" name="kd_jadwal" value="<?= $jadwal['kd_jadwal'] ?>" readoly>
-                                                                        <input type="hidden" class="form-control" name="kd_ortu" value="<?= $jadwal['kd_ortu'] ?>" readoly>
+                                                                        <?= form_open_multipart("ubah/tidak_hadir"); ?>
+                                                                        <input type="hidden" class="form-control" name="kd_kehadiran" value="<?= $jadwal['kd_kehadiran'] ?>" readoly>
                                                                         <div class="mb-3">
                                                                             <label for="nama" class="col-form-label">Nama Orang Tua</label>
                                                                             <input readoly type="text" class="form-control" name="nama" value="<?= get_nama_ortu($jadwal['kd_ortu']); ?>">

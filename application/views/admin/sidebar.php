@@ -25,22 +25,30 @@
             </li>
             <li>
                 <a href="javascript: void(0);">
-                    <i class="dripicons-mail"></i>
-                    <span> Informasi </span>
+                    <i class="fas fa-caret-square-down"></i>
+                    <span> More </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="<?= base_url('admin/anggota'); ?>">Anggota Posyandu</a>
+                        <i class="fas fa-calendar-alt"></i>
+                        <a href="<?= base_url('admin/jadwal'); ?>" class="d-inline-block">Jadwal Posyandu</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('admin/kegiatan'); ?>">Kegiatan Posyandu</a>
+                        <i class="fas fa-users-cog"></i>
+                        <a href="<?= base_url('admin/tambah_admin'); ?>" class="d-inline-block">Tambah Admin</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('admin/jadwal'); ?>">Jadwal Posyandu</a>
+                        <i class="fas fa-user-friends"></i>
+                        <a href="<?= base_url('admin/anggota'); ?>" class="d-inline-block">Anggota Posyandu</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('admin/laporan_posyandu'); ?>">Laporan Posyandu</a>
+                        <i class="fas fa-calendar-check"></i>
+                        <a href="<?= base_url('admin/kegiatan'); ?>" class="d-inline-block">Kegiatan Posyandu</a>
+                    </li>
+                    <li>
+                        <i class="fas fa-book"></i>
+                        <a href="<?= base_url('admin/laporan_posyandu'); ?>" class="d-inline-block">Laporan Posyandu</a>
                     </li>
                 </ul>
             </li>

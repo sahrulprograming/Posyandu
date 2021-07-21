@@ -68,6 +68,16 @@ class Hapus extends CI_Controller
 		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Berhasil Menghapus Data Imunisasi!</div>');
 		redirect('admin/imunisasi');
 	}
+	public function admin()
+	{
+		$hapus = $this->db->delete('admin', ['kd_admin' => $this->input->post('kd_admin')]);
+		if ($hapus) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menghapus Data Admin!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Menghapus Data Admin!</div>');
+		}
+		redirect('admin/tambah_admin');
+	}
 }
 
 

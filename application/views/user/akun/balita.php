@@ -37,31 +37,109 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="">NIK</label>
-                                                <input type="text" class="form-control" value="<?= $balita['nik']; ?>" readonly>
+                                        <div class="modal-body p-3">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>NIK</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $balita['nik']; ?></label>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="">Nama balita</label>
-                                                <input type="text" class="form-control" value="<?= $balita['nama_balita']; ?>">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>NAMA</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $balita['nama_balita']; ?></label>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="">Jenis Kelamin</label>
-                                                <input type="text" class="form-control" value="<?= $balita['jenis_kelamin']; ?>">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>JENIS KELAMIN</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $balita['jenis_kelamin']; ?></label>
+                                                </div>
                                             </div>
-                                            <?php $penimbangan = cek_penimbangan($balita['kd_balita']) ?>
-                                            <div class="form-group">
-                                                <label for="">Berat Badan</label>
-                                                <input type="text" class="form-control" value="<?= $penimbangan['bb']; ?>" readonly>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>TANGGAL LAHIR</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $balita['tgl_lahir']; ?></label>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="">Tinggi Badan</label>
-                                                <input type="text" class="form-control" value="<?= $penimbangan['tb']; ?>" readonly>
+                                            <!-- Query ke database Cek Data penimbang kd_balita -->
+                                            <?php
+                                            $data_balita = cek_penimbangan($balita['kd_balita']);
+                                            ?>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>BERAT BADAN</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $data_balita['bb']; ?></label>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="">Keluhan Terakhir</label>
-                                                <textarea type="text" class="form-control" readonly><?= $penimbangan['keluhan']; ?></textarea>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>TINGGI BADAN</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $data_balita['tb']; ?></label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>KELUHAN</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $data_balita['keluhan']; ?></label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>NAMA ORANG TUA</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $balita['nama_orang_tua']; ?></label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <label>NAMA BIDAN PERAWAT</label>
+                                                </div>
+                                                <div class="col-1 text-right">
+                                                    :
+                                                </div>
+                                                <div class="col-6">
+                                                    <label><?= $balita['nama_bidan']; ?></label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">

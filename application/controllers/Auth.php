@@ -11,9 +11,11 @@ class Auth extends CI_Controller
     }
     public function login()
     {
-        if ($this->session->userdata('role') == 'Admin' or $this->session->userdata('role') == 'Bidan') {
+        if ($this->session->userdata('role') == 'Admin') {
             redirect('admin');
-        } else if ($this->session->userdata('role') == 'User' or $this->session->userdata('role') == 'anggota') {
+        } elseif ($this->session->userdata('role') == 'Bidan') {
+            redirect('bidan');
+        } elseif ($this->session->userdata('role') == 'User' or $this->session->userdata('role') == 'anggota') {
             redirect('akun');
         }
         $this->form_validation->set_rules('email', 'Email', 'required|trim', [
@@ -73,10 +75,10 @@ class Auth extends CI_Controller
                 $data = [
                     'kd_bidan' => $bidan['kd_bidan'],
                     'role'  => 'Bidan',
-                    'id_menu' => 1
+                    'id_menu' => 4
                 ];
                 $this->session->set_userdata($data);
-                redirect('admin');
+                redirect('bidan');
             } elseif (password_verify($password, $anggota['password'])) {
                 $data = [
                     'kd_anggota' => $anggota['kd_anggota'],

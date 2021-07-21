@@ -56,7 +56,6 @@ class Akun extends CI_Controller
         public function pmt()
         {
                 $data['pmt'] = $this->pmt;
-                $data['jumlah_balita'] = $this->jumlah_balita;
                 $data['profile'] = $this->akun_model->data_user();
                 $data['title'] = 'PMT | Posyandu';
                 $this->load->view('template/header', $data);

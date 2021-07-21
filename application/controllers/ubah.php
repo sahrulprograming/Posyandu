@@ -187,13 +187,18 @@ class Ubah extends CI_Controller
 			'nik' => $this->input->post('nik'),
 			'jenis_kelamin' => $this->input->post('jenis_kelamin'),
 			'tgl_lahir' => $this->input->post('tgl_lahir'),
-			'kd_bidan' => $kd_bidan,
-			'kd_ortu' => $kd_ortu
+		];
+		$relasi_balita = [
+			'kd_ortu' => $kd_ortu,
+			'kd_bidan' => $kd_bidan
 		];
 		$this->db->where('kd_balita', $this->input->post('kd_balita'));
 		$this->db->update('balita', $data);
 		$result = $this->db->affected_rows();
-		if ($result > 0) {
+		$this->db->where('kd_balita', $this->input->post('kd_balita'));
+		$this->db->update('relasi_balita', $relasi_balita);
+		$result1 = $this->db->affected_rows();
+		if ($result > 0 || $result1 > 0) {
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Rubah Data Balita!</div>');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Rubah Data Balita!</div>');
@@ -374,6 +379,65 @@ class Ubah extends CI_Controller
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Merubah Data Balita!</div>');
 		}
 		redirect('akun/balita');
+	}
+	public function hadir()
+	{
+		$kd_kehadiran = $this->input->post('kd_kehadiran');
+		$data = [
+			'keterangan' => $this->input->post('keterangan'),
+			'status' => "hadir"
+		];
+		$this->db->set($data);
+		$this->db->where('kd_kehadiran', $kd_kehadiran);
+		$this->db->update('kehadiran');
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Input Hadir!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Gagal Input Hadir!</div>');
+		}
+		redirect('admin');
+	}
+	public function tidak_hadir()
+	{
+		$kd_kehadiran = $this->input->post('kd_kehadiran');
+		$data = [
+			'keterangan' => $this->input->post('keterangan'),
+			'status' => "tidak hadir"
+		];
+		$this->db->set($data);
+		$this->db->where('kd_kehadiran', $kd_kehadiran);
+		$this->db->update('kehadiran');
+		$result = $this->db->affected_rows();
+		if ($result > 0) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Input Tidak Hadir!</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Gagal Input Tidak Hadir!</div>');
+		}
+		redirect('admin');
+	}
+	public function kehadiran_bidan()
+	{
+		$status = $this->input->post('status_kehadiran');
+		if ($status) {
+			$data = [
+				'status_kehadiran' => $status,
+				'keterangan' => $this->input->post('keterangan')
+			];
+			$this->db->set($data);
+			$this->db->where('kd_jadwal', $this->input->post('kd_jadwal'));
+			$this->db->where('kd_bidan', $this->session->userdata('kd_bidan'));
+			$this->db->update('kehadiran_bidan');
+			$result = $this->db->affected_rows();
+			if ($result > 0) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Input Tidak Hadir!</div>');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Gagal Input Tidak Hadir!</div>');
+			}
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda Belum Memilih Status Kehadiran!</div>');
+		}
+		redirect('bidan');
 	}
 }
 

@@ -16,7 +16,7 @@ class Admin_model extends CI_Model
     }
     public function jadwal_hari_ini()
     {
-        $sql = "SELECT * FROM `antrian` JOIN jadwal ON `antrian`.`kd_jadwal` = `jadwal`.`kd_jadwal` WHERE NOT `antrian`.`kd_ortu` = ANY (SELECT kd_ortu FROM kehadiran WHERE kd_jadwal = ANY (SELECT kd_jadwal FROM jadwal WHERE tanggal = CURDATE())) AND `jadwal`.`tanggal` = CURDATE()";
+        $sql = "SELECT * FROM `kehadiran` JOIN jadwal ON `kehadiran`.`kd_jadwal` = `jadwal`.`kd_jadwal` WHERE `kehadiran`.`status` = 'dalam antrian'";
         $result = $this->db->query($sql)->result_array();
         return $result;
     }
@@ -48,9 +48,10 @@ class Admin_model extends CI_Model
         `balita`.`tgl_lahir`,
         `balita`.`jenis_kelamin`,
         `balita`.`kd_balita`');
-        $this->db->from('balita');
-        $this->db->join('orang_tua', 'balita.kd_ortu = orang_tua.kd_ortu', 'left');
-        $this->db->join('bidan', 'balita.kd_bidan = bidan.kd_bidan', 'left');
+        $this->db->from('relasi_balita');
+        $this->db->join('orang_tua', 'relasi_balita.kd_ortu = orang_tua.kd_ortu', 'left');
+        $this->db->join('balita', 'relasi_balita.kd_balita = balita.kd_balita', 'left');
+        $this->db->join('bidan', 'relasi_balita.kd_bidan = bidan.kd_bidan', 'left');
         $profile_balita = $this->db->get()->result_array();
         return $profile_balita;
     }
@@ -76,6 +77,10 @@ class Admin_model extends CI_Model
         $this->db->order_by('kd_jadwal', 'DESC');
         $data_jadwal = $this->db->get()->result_array();
         return $data_jadwal;
+    }
+    public function data_admin_all()
+    {
+        return $this->db->get('admin')->result_array();
     }
     public function data_anggota()
     {
@@ -158,7 +163,7 @@ class Admin_model extends CI_Model
     public function jumlah_balita($kd_ortu)
     {
         $this->db->select('*');
-        $this->db->from('balita');
+        $this->db->from('relasi_balita');
         $this->db->where('kd_ortu', $kd_ortu);
         $jumlah_balita = $this->db->get()->num_rows();
         return $jumlah_balita;
@@ -226,7 +231,7 @@ class Admin_model extends CI_Model
             }
         }
         $result = $this->db->query("SELECT nama,kd_ortu FROM `orang_tua`
-                                WHERE NOT kd_ortu = ANY (SELECT kd_ortu FROM kehadiran WHERE kd_jadwal = $kd_jadwal)")->result_array();
+                                WHERE kd_ortu NOT IN (SELECT kd_ortu FROM kehadiran WHERE kd_jadwal = $kd_jadwal)")->result_array();
         return [$result, $jadwal];
     }
     public function data_kas()

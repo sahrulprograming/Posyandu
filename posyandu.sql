@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Jun 2021 pada 00.50
+-- Waktu pembuatan: 21 Jul 2021 pada 15.35
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `kd_admin` int(11) NOT NULL,
+  `kd_admin` int(7) NOT NULL,
   `nik` varchar(16) NOT NULL,
   `nama` varchar(65) NOT NULL,
   `alamat` varchar(258) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`kd_admin`, `nik`, `nama`, `alamat`, `no_tlpn`, `foto`, `email`, `password`) VALUES
-(1, '123456789', 'Admin Posyandu', 'Cimone', '0123456', 'topi.png', 'admin@gmail.com', '$2y$10$F59EIg8u6tnjUwVKPV/wLOKA6kXc8iCDSLggam.anYbpX5.UJRnki');
+(1210001, '123456789', 'Admin Posyandu', 'Cimone', '082126079104', 'topi.png', 'admin@gmail.com', '$2y$10$F59EIg8u6tnjUwVKPV/wLOKA6kXc8iCDSLggam.anYbpX5.UJRnki');
 
 -- --------------------------------------------------------
 
@@ -52,7 +52,7 @@ INSERT INTO `admin` (`kd_admin`, `nik`, `nama`, `alamat`, `no_tlpn`, `foto`, `em
 --
 
 CREATE TABLE `anggota` (
-  `kd_anggota` int(11) NOT NULL,
+  `kd_anggota` int(7) NOT NULL,
   `nik` varchar(16) NOT NULL,
   `nama` varchar(65) NOT NULL,
   `posisi` varchar(65) DEFAULT NULL,
@@ -66,38 +66,16 @@ CREATE TABLE `anggota` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `antrian`
---
-
-CREATE TABLE `antrian` (
-  `no_antrian` int(11) NOT NULL,
-  `kd_ortu` int(11) DEFAULT NULL,
-  `kd_jadwal` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `balita`
 --
 
 CREATE TABLE `balita` (
-  `kd_balita` int(11) NOT NULL,
+  `kd_balita` int(7) NOT NULL,
   `nik` varchar(16) DEFAULT NULL,
   `nama` varchar(65) NOT NULL,
   `jenis_kelamin` enum('L','P') NOT NULL,
-  `tgl_lahir` date NOT NULL,
-  `kd_bidan` int(11) DEFAULT NULL,
-  `kd_ortu` int(11) DEFAULT NULL
+  `tgl_lahir` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `balita`
---
-
-INSERT INTO `balita` (`kd_balita`, `nik`, `nama`, `jenis_kelamin`, `tgl_lahir`, `kd_bidan`, `kd_ortu`) VALUES
-(14, '5987654', 'MUHAMMAD SAHRUL SAEFULAH', 'L', '2021-06-04', 6, 19),
-(15, '234567890', 'yeshic', 'P', '2021-06-01', 6, 19);
 
 -- --------------------------------------------------------
 
@@ -106,7 +84,7 @@ INSERT INTO `balita` (`kd_balita`, `nik`, `nama`, `jenis_kelamin`, `tgl_lahir`, 
 --
 
 CREATE TABLE `bidan` (
-  `kd_bidan` int(11) NOT NULL,
+  `kd_bidan` int(7) NOT NULL,
   `nik` varchar(16) NOT NULL,
   `nama` varchar(65) NOT NULL,
   `alamat` varchar(258) NOT NULL,
@@ -121,7 +99,7 @@ CREATE TABLE `bidan` (
 --
 
 INSERT INTO `bidan` (`kd_bidan`, `nik`, `nama`, `alamat`, `no_tlpn`, `foto`, `email`, `password`) VALUES
-(6, '12340', 'tinta Nodanti', 'cimone', '098765456', 'default-P.jpg', 'tinta@gmail.com', '$2y$10$6oSABSoU9AjIoy5PSK3XVexacaI3Q2vCGiqfvZzgBq6Kty2azheMG');
+(4210001, '12340', 'tinta Nodanti', 'cimone', '098765456', 'default-P.jpg', 'tinta@gmail.com', '$2y$10$6oSABSoU9AjIoy5PSK3XVexacaI3Q2vCGiqfvZzgBq6Kty2azheMG');
 
 -- --------------------------------------------------------
 
@@ -141,9 +119,10 @@ CREATE TABLE `controller_access` (
 INSERT INTO `controller_access` (`role`, `controller`) VALUES
 ('Admin', 'admin'),
 ('User', 'Akun'),
-('Bidan', 'admin'),
+('Bidan', 'bidan'),
 ('anggota', 'Akun'),
-('anggota', 'anggota');
+('anggota', 'anggota'),
+('Bidan', 'Akun');
 
 -- --------------------------------------------------------
 
@@ -156,7 +135,7 @@ CREATE TABLE `imunisasi` (
   `jenis_imunisasi` varchar(55) NOT NULL,
   `keterangan` varchar(225) DEFAULT NULL,
   `tanggal` date NOT NULL,
-  `kd_balita` int(11) DEFAULT NULL
+  `kd_balita` int(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -174,7 +153,7 @@ CREATE TABLE `jadwal` (
   `jam_selesai` time NOT NULL,
   `dibuat_pada` date NOT NULL,
   `keterangan` varchar(128) DEFAULT NULL,
-  `kd_admin` int(11) DEFAULT NULL
+  `kd_admin` int(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -182,8 +161,9 @@ CREATE TABLE `jadwal` (
 --
 
 INSERT INTO `jadwal` (`kd_jadwal`, `kas_PMT`, `tanggal`, `tempat`, `jam_mulai`, `jam_selesai`, `dibuat_pada`, `keterangan`, `kd_admin`) VALUES
-(15, 50000, '2021-06-19', 'Posyandu Mawar 20', '08:15:00', '18:15:00', '2021-06-18', 'Cek Kesehatan Balita', 1),
-(16, 60000, '2021-06-30', 'Posyandu Mawar 20', '08:01:00', '10:01:00', '2021-06-19', 'Cek Kesehatan Balita', 1);
+(15, 50000, '2021-06-19', 'Posyandu Mawar 20', '08:15:00', '18:15:00', '2021-06-18', 'Cek Kesehatan Balita', 1210001),
+(16, 60000, '2021-06-30', 'Posyandu Mawar 20', '08:01:00', '10:01:00', '2021-06-19', 'Cek Kesehatan Balita', 1210001),
+(19, 40000, '2021-07-21', 'Posyandu Mawar 20', '12:38:00', '20:38:00', '2021-07-21', 'Cek Kesehatan Balita', 1210001);
 
 -- --------------------------------------------------------
 
@@ -198,16 +178,6 @@ CREATE TABLE `kas_pmt` (
   `nominal_keluar` int(11) DEFAULT NULL,
   `keterangan` varchar(258) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `kas_pmt`
---
-
-INSERT INTO `kas_pmt` (`kd_kas`, `kd_pmt`, `nominal_masuk`, `nominal_keluar`, `keterangan`) VALUES
-(1, 21, 100000, NULL, ''),
-(2, 22, 120000, NULL, ''),
-(3, NULL, NULL, 100000, ''),
-(4, NULL, NULL, 20000, 'coba');
 
 -- --------------------------------------------------------
 
@@ -237,10 +207,24 @@ INSERT INTO `kegiatan` (`kd_kegiatan`, `judul`, `foto_kegiatan`, `keterangan`) V
 
 CREATE TABLE `kehadiran` (
   `kd_kehadiran` int(11) NOT NULL,
-  `status` enum('hadir','tidak hadir') NOT NULL,
+  `status` enum('dalam antrian','hadir','tidak hadir') NOT NULL,
   `keterangan` varchar(258) DEFAULT NULL,
   `kd_jadwal` int(11) DEFAULT NULL,
-  `kd_ortu` int(11) DEFAULT NULL
+  `no_antrian` int(11) NOT NULL,
+  `kd_ortu` int(7) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kehadiran_bidan`
+--
+
+CREATE TABLE `kehadiran_bidan` (
+  `kd_jadwal` int(11) NOT NULL,
+  `kd_bidan` int(7) NOT NULL,
+  `status_kehadiran` enum('hadir','tidak hadir') NOT NULL,
+  `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -261,7 +245,8 @@ CREATE TABLE `menu` (
 INSERT INTO `menu` (`id_menu`, `menu_untuk`) VALUES
 (1, 'Admin'),
 (2, 'User'),
-(3, 'anggota');
+(3, 'anggota'),
+(4, 'bidan');
 
 -- --------------------------------------------------------
 
@@ -270,7 +255,7 @@ INSERT INTO `menu` (`id_menu`, `menu_untuk`) VALUES
 --
 
 CREATE TABLE `orang_tua` (
-  `kd_ortu` int(11) NOT NULL,
+  `kd_ortu` int(7) NOT NULL,
   `nik` varchar(16) DEFAULT NULL,
   `no_kk` varchar(16) DEFAULT NULL,
   `nama` varchar(65) NOT NULL,
@@ -281,13 +266,6 @@ CREATE TABLE `orang_tua` (
   `password` varchar(250) NOT NULL,
   `status` enum('aktif','non aktif') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `orang_tua`
---
-
-INSERT INTO `orang_tua` (`kd_ortu`, `nik`, `no_kk`, `nama`, `alamat`, `no_tlpn`, `foto`, `email`, `password`, `status`) VALUES
-(19, '4545678', '345678', 'yulia', 'jln yuli', '0987633456', 'default-P.jpg', 'yuli@gmail.com', '$2y$10$GnYRC8.kaxTXg6yEzTCm7.d2PYNnLpRPFKYYiirvtkyTYOTgcFb2K', 'aktif');
 
 -- --------------------------------------------------------
 
@@ -301,7 +279,19 @@ CREATE TABLE `penimbangan` (
   `tb` int(11) NOT NULL,
   `keluhan` varchar(500) DEFAULT NULL,
   `tanggal` date NOT NULL,
-  `kd_balita` int(11) DEFAULT NULL
+  `kd_balita` int(7) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `relasi_balita`
+--
+
+CREATE TABLE `relasi_balita` (
+  `kd_balita` int(7) NOT NULL,
+  `kd_ortu` int(7) NOT NULL,
+  `kd_bidan` int(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -315,17 +305,9 @@ CREATE TABLE `status_pmt` (
   `tgl_bayar` date NOT NULL,
   `status_bayar` enum('lunas','menunggu') NOT NULL,
   `kd_jadwal` int(11) DEFAULT NULL,
-  `kd_ortu` int(11) DEFAULT NULL,
+  `kd_ortu` int(7) DEFAULT NULL,
   `jml_balita` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `status_pmt`
---
-
-INSERT INTO `status_pmt` (`kd_pmt`, `tgl_bayar`, `status_bayar`, `kd_jadwal`, `kd_ortu`, `jml_balita`) VALUES
-(21, '2021-06-18', 'lunas', 15, 19, 2),
-(22, '2021-06-19', 'lunas', 16, 19, 2);
 
 -- --------------------------------------------------------
 
@@ -361,7 +343,10 @@ INSERT INTO `sub_menu` (`id_sub_menu`, `id_menu`, `judul`, `url`, `icon`, `is_ac
 (12, 3, 'Home', 'akun', 'fas fa-home', 1),
 (13, 3, 'Data Orang Tua', 'anggota/orang_tua', 'fas fa-users', 1),
 (14, 3, 'Data Balita', 'anggota/balita', 'fas fa-baby', 1),
-(15, 3, 'Jadwal Posyandu', 'akun/jadwal_posyandu', 'far fa-calendar-alt', 1);
+(15, 3, 'Jadwal Posyandu', 'akun/jadwal_posyandu', 'far fa-calendar-alt', 1),
+(16, 4, 'Jadwal', 'bidan', 'far fa-calendar-alt', 1),
+(17, 4, 'Data Balita', 'bidan/balita', 'fas fa-baby', 1),
+(18, 4, 'Imunisasi', 'bidan/imunisasi', 'fas fa-syringe', 1);
 
 --
 -- Indexes for dumped tables
@@ -380,19 +365,10 @@ ALTER TABLE `anggota`
   ADD PRIMARY KEY (`kd_anggota`);
 
 --
--- Indeks untuk tabel `antrian`
---
-ALTER TABLE `antrian`
-  ADD KEY `antrian_ibfk_1` (`kd_ortu`),
-  ADD KEY `antrian_ibfk_2` (`kd_jadwal`);
-
---
 -- Indeks untuk tabel `balita`
 --
 ALTER TABLE `balita`
-  ADD PRIMARY KEY (`kd_balita`),
-  ADD KEY `balita_ibfk_2` (`kd_ortu`),
-  ADD KEY `balita_ibfk_1` (`kd_bidan`);
+  ADD PRIMARY KEY (`kd_balita`);
 
 --
 -- Indeks untuk tabel `bidan`
@@ -455,6 +431,14 @@ ALTER TABLE `penimbangan`
   ADD KEY `penimbangan_ibfk_1` (`kd_balita`);
 
 --
+-- Indeks untuk tabel `relasi_balita`
+--
+ALTER TABLE `relasi_balita`
+  ADD KEY `relasi_table_balita` (`kd_balita`),
+  ADD KEY `kd_ortu` (`kd_ortu`),
+  ADD KEY `kd_bidan` (`kd_bidan`);
+
+--
 -- Indeks untuk tabel `status_pmt`
 --
 ALTER TABLE `status_pmt`
@@ -473,46 +457,22 @@ ALTER TABLE `sub_menu`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `admin`
---
-ALTER TABLE `admin`
-  MODIFY `kd_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `anggota`
---
-ALTER TABLE `anggota`
-  MODIFY `kd_anggota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `balita`
---
-ALTER TABLE `balita`
-  MODIFY `kd_balita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT untuk tabel `bidan`
---
-ALTER TABLE `bidan`
-  MODIFY `kd_bidan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT untuk tabel `imunisasi`
 --
 ALTER TABLE `imunisasi`
-  MODIFY `kd_imunisasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `kd_imunisasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `kd_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `kd_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `kas_pmt`
 --
 ALTER TABLE `kas_pmt`
-  MODIFY `kd_kas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `kd_kas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `kegiatan`
@@ -524,55 +484,35 @@ ALTER TABLE `kegiatan`
 -- AUTO_INCREMENT untuk tabel `kehadiran`
 --
 ALTER TABLE `kehadiran`
-  MODIFY `kd_kehadiran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `kd_kehadiran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `orang_tua`
---
-ALTER TABLE `orang_tua`
-  MODIFY `kd_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `penimbangan`
 --
 ALTER TABLE `penimbangan`
-  MODIFY `kd_penimbang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `kd_penimbang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `status_pmt`
 --
 ALTER TABLE `status_pmt`
-  MODIFY `kd_pmt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `kd_pmt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT untuk tabel `sub_menu`
 --
 ALTER TABLE `sub_menu`
-  MODIFY `id_sub_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_sub_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
-
---
--- Ketidakleluasaan untuk tabel `antrian`
---
-ALTER TABLE `antrian`
-  ADD CONSTRAINT `antrian_ibfk_1` FOREIGN KEY (`kd_ortu`) REFERENCES `orang_tua` (`kd_ortu`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `antrian_ibfk_2` FOREIGN KEY (`kd_jadwal`) REFERENCES `jadwal` (`kd_jadwal`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `balita`
---
-ALTER TABLE `balita`
-  ADD CONSTRAINT `balita_ibfk_1` FOREIGN KEY (`kd_bidan`) REFERENCES `bidan` (`kd_bidan`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `balita_ibfk_2` FOREIGN KEY (`kd_ortu`) REFERENCES `orang_tua` (`kd_ortu`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `imunisasi`
@@ -584,7 +524,7 @@ ALTER TABLE `imunisasi`
 -- Ketidakleluasaan untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
-  ADD CONSTRAINT `jadwal_ibfk_1` FOREIGN KEY (`kd_admin`) REFERENCES `admin` (`kd_admin`);
+  ADD CONSTRAINT `jadwal_ibfk_1` FOREIGN KEY (`kd_admin`) REFERENCES `admin` (`kd_admin`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `kas_pmt`
@@ -604,6 +544,14 @@ ALTER TABLE `kehadiran`
 --
 ALTER TABLE `penimbangan`
   ADD CONSTRAINT `penimbangan_ibfk_1` FOREIGN KEY (`kd_balita`) REFERENCES `balita` (`kd_balita`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `relasi_balita`
+--
+ALTER TABLE `relasi_balita`
+  ADD CONSTRAINT `relasi_table_balita` FOREIGN KEY (`kd_balita`) REFERENCES `balita` (`kd_balita`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `relasi_table_bidan` FOREIGN KEY (`kd_bidan`) REFERENCES `bidan` (`kd_bidan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `relasi_table_orang_tua` FOREIGN KEY (`kd_ortu`) REFERENCES `orang_tua` (`kd_ortu`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `status_pmt`

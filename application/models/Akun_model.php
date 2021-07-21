@@ -11,6 +11,8 @@ class Akun_model extends CI_Model
         $role = $this->session->userdata('role');
         if (strtolower($role) == 'anggota') {
             $data_login = $this->db->get_where('anggota', ['kd_anggota' => $this->session->userdata('kd_anggota')])->row_array();
+        } elseif (strtolower($role) == 'bidan') {
+            $data_login = $this->db->get_where('bidan', ['kd_bidan' => $this->session->userdata('kd_bidan')])->row_array();
         } else {
             $data_login = $this->db->get_where('orang_tua', ['kd_ortu' => $this->session->userdata('kd_ortu')])->row_array();
         }
@@ -25,10 +27,10 @@ class Akun_model extends CI_Model
         `balita`.`tgl_lahir`,
         `balita`.`jenis_kelamin`,
         `balita`.`kd_balita`');
-        $this->db->from('balita');
-        $this->db->join('orang_tua', 'balita.kd_ortu = orang_tua.kd_ortu', 'left');
-        $this->db->join('bidan', 'balita.kd_bidan = bidan.kd_bidan', 'left');
-        $this->db->where('balita.kd_ortu', $this->session->userdata('kd_ortu'));
+        $this->db->from('relasi_balita');
+        $this->db->join('orang_tua', 'relasi_balita.kd_ortu = orang_tua.kd_ortu', 'left');
+        $this->db->join('balita', 'relasi_balita.kd_balita = balita.kd_balita', 'left');
+        $this->db->join('bidan', 'relasi_balita.kd_bidan = bidan.kd_bidan', 'left');
         $profile_balita = $this->db->get()->result_array();
         return $profile_balita;
     }
@@ -41,7 +43,7 @@ class Akun_model extends CI_Model
     {
         $kd_ortu = $this->session->userdata('kd_ortu');
         $this->db->select('*');
-        $this->db->from('balita');
+        $this->db->from('relasi_balita');
         $this->db->where('kd_ortu', $kd_ortu);
         $jumlah_balita = $this->db->get()->num_rows();
         return $jumlah_balita;
@@ -69,7 +71,11 @@ class Akun_model extends CI_Model
     }
     public function cek_balita()
     {
-        $query = $this->db->get_where('balita', ['kd_ortu' => $this->session->userdata('kd_ortu')])->result_array();
+        $this->db->select('*');
+        $this->db->from('relasi_balita');
+        $this->db->join('balita', 'relasi_balita.kd_balita = balita.kd_balita', 'left');
+        $this->db->where('relasi_balita.kd_ortu', $this->session->userdata('kd_ortu'));
+        $query = $query = $this->db->get()->result_array();
         return $query;
     }
     public function status_pmt($kd_jadwal)

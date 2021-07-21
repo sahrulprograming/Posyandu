@@ -208,4 +208,16 @@ class Admin extends CI_Controller
 		$this->load->view('template/rightbar', $data);
 		$this->load->view('template/footer');
 	}
+	public function tambah_admin($value = '')
+	{
+		$data['title'] = 'Tambah Admin | Posyandu';
+		$data['profile'] = $this->data_admin;
+		$data['admin'] = $this->admin_model->data_admin_all();
+		$this->load->view('template/header', $data);
+		$this->load->view('template/topbar', $data);
+		$this->load->view('admin/sidebar', $data);
+		$this->load->view('admin/admin');
+		$this->load->view('template/rightbar', $data);
+		$this->load->view('template/footer');
+	}
 }

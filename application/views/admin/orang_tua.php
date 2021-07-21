@@ -64,52 +64,94 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body p-3">
-                                                                <?= form_open_multipart("admin/ubah_ortu"); ?>
-                                                                <input class="form-control form-white" type="hidden" name="kd_ortu" value="<?= $orang_tua['kd_ortu']; ?>" readonly>
                                                                 <!-- Nomer KK -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">No KK</label>
-                                                                    <input class="form-control form-white" placeholder="masukan alamat" type="text" name="no_kk" value="<?= $orang_tua['no_kk']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>NO KK</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <span><?= $orang_tua['no_kk']; ?></span>
+                                                                    </div>
                                                                 </div>
                                                                 <!-- NIK -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Nik</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nik" type="text" name="nik" value="<?= $orang_tua['nik']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>NIK</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <span><?= $orang_tua['nik']; ?></span>
+                                                                    </div>
                                                                 </div>
                                                                 <!-- NAMA -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Nama</label>
-                                                                    <input class="form-control form-white" placeholder="masukan nama" type="text" name="nama" value="<?= $orang_tua['nama']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>NAMA</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <span><?= $orang_tua['nama']; ?></span>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Alamat -->
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>ALAMAT</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <span><?= $orang_tua['alamat']; ?></span>
+                                                                    </div>
                                                                 </div>
                                                                 <!-- No Telp -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Alamat</label>
-                                                                    <textarea class="form-control form-white" placeholder="Alamat" type="text" name="alamat" readonly><?= $orang_tua['alamat']; ?></textarea>
-                                                                </div>
-                                                                <!-- No Telp -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">No Telp</label>
-                                                                    <input class="form-control form-white" placeholder="masukan tlp" type="text" name="no_tlpn" value="<?= $orang_tua['no_tlpn']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>NO HP</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <span><?= $orang_tua['no_tlpn']; ?></span>
+                                                                    </div>
                                                                 </div>
                                                                 <!-- Email -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label">email</label>
-                                                                    <input class="form-control form-white" placeholder="email" type="text" name="email" value="<?= $orang_tua['email']; ?>" readonly>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>EMAIL</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <span><?= $orang_tua['email']; ?></span>
+                                                                    </div>
                                                                 </div>
                                                                 <!-- Status Keaktifan User -->
-                                                                <div class="form-group">
-                                                                    <label for="">Status</label>
-                                                                    <select class="custom-select" id="inputGroupSelect01" name="status" readonly>
-                                                                        <option selected><?= $orang_tua['status']; ?></option>
-                                                                    </select>
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>STATUS</label>
+                                                                    </div>
+                                                                    <div class="col-1 text-right">
+                                                                        :
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <span><?= $orang_tua['status']; ?></span>
+                                                                    </div>
                                                                 </div>
-
                                                                 <div class="text-right">
                                                                     <!-- Tombol Close -->
                                                                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
                                                                 </div>
-
-                                                                </form>
                                                             </div>
                                                             <!-- Akhir modal body-->
                                                         </div>

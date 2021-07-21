@@ -41,10 +41,7 @@
                                         <tbody>
                                             <?php foreach ($jadwal as $jadwal) : ?>
                                                 <tr>
-                                                    <?php $arr = explode('-', $jadwal['tanggal']);
-                                                    $date = $arr[2] . '-' . $arr[1] . '-' . $arr[0];
-                                                    ?>
-                                                    <td><?= $date; ?></td>
+                                                    <td><?= $jadwal['tanggal']; ?></td>
                                                     <td class="text-center"><?= $jadwal['tempat']; ?></td>
                                                     <td><?= $jadwal['jam_mulai']; ?></td>
                                                     <td><?= $jadwal['jam_selesai']; ?></td>
